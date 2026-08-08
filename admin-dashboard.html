@@ -639,11 +639,10 @@
       // =============================
       // Auth
       // =============================
-      adminAccessBtn.addEventListener("click", () => {
-        if (isAuthed()) { openDashboard(); return; }
-        loginError.classList.add("hidden");
-        loginModal.classList.remove("hidden");
-        loginModal.classList.add("flex");
+adminAccessBtn.addEventListener("click", () => {
+        // Option A: auto-login straight to dashboard (no password prompt)
+        sessionStorage.setItem(AUTH_KEY, "true");
+        openDashboard();
       });
       closeLoginModal.addEventListener("click", closeLogin);
       loginModal.addEventListener("click", (e) => { if (e.target === loginModal) closeLogin(); });
@@ -663,9 +662,11 @@
         }
       });
 
-      logoutBtn.addEventListener("click", () => {
+logoutBtn.addEventListener("click", () => {
         sessionStorage.removeItem(AUTH_KEY);
         closeDashboard();
+        // Hide the "Admin Access" button after logout
+        adminAccessBtn.classList.add("hidden");
       });
 
       // =============================
