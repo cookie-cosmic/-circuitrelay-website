@@ -408,12 +408,19 @@
               </div>
             </section>
 
-            <!-- Impact -->
+<!-- Impact -->
             <section class="rounded-xl border border-black/10 bg-card p-4 dark:border-white/10 dark:bg-darkCard">
               <h3 class="mb-3 text-lg font-semibold">Impact Section</h3>
               <div class="grid gap-3">
                 <label class="text-sm">Heading<input id="cImpactHeading" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
                 <label class="text-sm">Subtext<textarea id="cImpactSubtext" rows="2" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+                <hr class="border-black/10 dark:border-white/10" />
+                <p class="text-xs font-semibold text-sub dark:text-darkSub">Stat Values (numbers)</p>
+                <label class="text-sm">Lbs Diverted (value)<input id="cStat1Value" type="number" min="0" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Laptops Deployed (value)<input id="cStat2Value" type="number" min="0" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Free Service % (value)<input id="cStat3Value" type="number" min="0" max="100" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <hr class="border-black/10 dark:border-white/10" />
+                <p class="text-xs font-semibold text-sub dark:text-darkSub">Stat Labels (text)</p>
                 <label class="text-sm">Stat 1 Label<input id="cStat1Label" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
                 <label class="text-sm">Stat 2 Label<input id="cStat2Label" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
                 <label class="text-sm">Stat 3 Label<input id="cStat3Label" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
@@ -1030,9 +1037,16 @@ function openDashboard() {
         set("cMission1Title", c.missionCard1Title); set("cMission1Text", c.missionCard1Text);
         set("cMission2Title", c.missionCard2Title); set("cMission2Text", c.missionCard2Text);
         set("cMission3Title", c.missionCard3Title); set("cMission3Text", c.missionCard3Text);
-        // Impact
+// Impact
         set("cImpactHeading", c.impactHeading); set("cImpactSubtext", c.impactSubtext);
         set("cStat1Label", c.statLbsLabel); set("cStat2Label", c.statLaptopsLabel); set("cStat3Label", c.statFreeLabel);
+        // Impact stat values (numbers)
+        const sEl1 = document.getElementById("cStat1Value");
+        const sEl2 = document.getElementById("cStat2Value");
+        const sEl3 = document.getElementById("cStat3Value");
+        if (sEl1) sEl1.value = siteData.stats.lbsDiverted;
+        if (sEl2) sEl2.value = siteData.stats.laptopsDeployed;
+        if (sEl3) sEl3.value = siteData.stats.freeServicePercent;
         // Programs
         set("cProgramsHeading", c.programsHeading); set("cProgramsSubtext", c.programsSubtext);
         set("cProgram1Title", c.program1Title); set("cProgram1Text", c.program1Text);
@@ -1099,12 +1113,23 @@ function openDashboard() {
         c.missionCard3Title = get("cMission3Title");
         c.missionCard3Text = get("cMission3Text");
 
-        // Impact
+// Impact
         c.impactHeading = get("cImpactHeading");
         c.impactSubtext = get("cImpactSubtext");
         c.statLbsLabel = get("cStat1Label");
         c.statLaptopsLabel = get("cStat2Label");
         c.statFreeLabel = get("cStat3Label");
+
+        // Impact stat values (numbers)
+        const sVal1El = document.getElementById("cStat1Value");
+        const sVal2El = document.getElementById("cStat2Value");
+        const sVal3El = document.getElementById("cStat3Value");
+        const s1 = sVal1El ? Number(sVal1El.value) : NaN;
+        const s2 = sVal2El ? Number(sVal2El.value) : NaN;
+        const s3 = sVal3El ? Number(sVal3El.value) : NaN;
+        if (!Number.isNaN(s1) && s1 >= 0) siteData.stats.lbsDiverted = s1;
+        if (!Number.isNaN(s2) && s2 >= 0) siteData.stats.laptopsDeployed = s2;
+        if (!Number.isNaN(s3) && s3 >= 0) siteData.stats.freeServicePercent = Math.min(100, s3);
 
         // Programs
         c.programsHeading = get("cProgramsHeading");
