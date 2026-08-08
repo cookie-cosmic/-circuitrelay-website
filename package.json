@@ -1,0 +1,24 @@
+{
+  "name": "circuitrelay-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "worker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cookie-cosmic/-circuitrelay-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/cookie-cosmic/-circuitrelay-website/issues"
+  },
+  "homepage": "https://github.com/cookie-cosmic/-circuitrelay-website#readme",
+  "devDependencies": {
+    "wrangler": "^4.120.0"
+  }
+}

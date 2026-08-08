@@ -730,15 +730,15 @@
       const ADMIN_USERNAME = "Addy";
       const ADMIN_PASSWORD = "Addy@1234";
 
-      // =============================
+// =============================
       // Global sync config (Cloudflare Worker)
       // The Worker securely reads/writes the GitHub site-data.json.
       // No tokens are stored in this file.
       // =============================
-      const WORKER_URL = "https://YOUR-WORKER.workers.dev"; // <-- REPLACE with your Worker URL
+      const WORKER_URL = "https://circuitrelay-sync.akn6722.workers.dev";
       // The admin key is shared with the Worker to authorize writes.
       // It is NOT a GitHub token; it only protects the Worker endpoint.
-      const ADMIN_SYNC_KEY = "YOUR_RANDOM_ADMIN_KEY"; // <-- REPLACE with a long random string
+      const ADMIN_SYNC_KEY = "cr_secure_admin_key_9f3a7b2c1d8e4f5a6b"; // matches ADMIN_KEY secret set in Cloudflare
 
       // =============================
       // Default editable site data

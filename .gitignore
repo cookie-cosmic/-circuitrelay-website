@@ -1,3 +1,9 @@
 # Ignore sensitive files
 PAT_token
 *.token
+
+# Node / wrangler artifacts
+node_modules/
+.wrangler/
+deploy_output.txt
+

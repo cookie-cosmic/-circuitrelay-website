@@ -11,3 +11,4 @@ Make most page text editable from the Admin Panel, then push changes to GitHub.
 - [x] Wire all new fields into render/save logic (defaultSiteData, renderSiteFromData, renderAdminFields, saveAdminChangesBtn)
 - [x] Verify the complete updated index.html
 - [x] Push changes to GitHub (https://github.com/cookie-cosmic/-circuitrelay-website)
+  - Commit b66e76d pushed to main (index.html + worker.js)

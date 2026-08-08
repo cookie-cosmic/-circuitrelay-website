@@ -1,0 +1,12 @@
+name = "circuitrelay-sync"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# Cloudflare Worker variables (non-secret)
+[vars]
+ALLOWED_ORIGIN = "*"
+GITHUB_OWNER = "cookie-cosmic"
+GITHUB_REPO = "-circuitrelay-website"
+GITHUB_BRANCH = "main"
+DATA_FILE = "site-data.json"
+
