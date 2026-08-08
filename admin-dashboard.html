@@ -245,20 +245,32 @@
     <!-- ===================== -->
     <!-- ADMIN DASHBOARD       -->
     <!-- ===================== -->
-    <div id="dashboard" class="fixed inset-0 z-[80] hidden overflow-y-auto bg-cream dark:bg-darkBg">
-      <div class="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h1 class="text-2xl font-bold">Admin Dashboard</h1>
-            <p class="text-sub dark:text-darkSub">Inventory pipeline &amp; donation requests.</p>
-          </div>
-          <div class="flex items-center gap-2">
-<a href="index.html" class="rounded-md border border-black/10 px-4 py-2 text-sm font-semibold transition hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/10">View Site</a>
-            <button id="logoutBtn" class="rounded-md bg-red-500 px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90">Logout</button>
-          </div>
+<div id="dashboard" class="fixed inset-0 z-[80] hidden bg-cream dark:bg-darkBg">
+      <!-- ===================== -->
+      <!-- SIDEBAR               -->
+      <!-- ===================== -->
+      <aside class="flex h-full w-full flex-col sm:w-64 sm:shrink-0 border-r border-black/10 bg-card dark:border-white/10 dark:bg-darkCard">
+        <div class="px-5 py-6">
+          <h1 class="text-xl font-bold">Admin Dashboard</h1>
+          <p class="text-xs text-sub dark:text-darkSub">Manage site content &amp; inventory</p>
         </div>
+        <nav class="flex-1 space-y-1 px-3">
+          <button class="side-nav w-full rounded-md px-3 py-2 text-left text-sm font-semibold" data-panel="inventory">📦 Inventory Pipeline</button>
+          <button class="side-nav w-full rounded-md px-3 py-2 text-left text-sm font-semibold" data-panel="requests">📩 Donation Requests</button>
+          <button class="side-nav w-full rounded-md px-3 py-2 text-left text-sm font-semibold" data-panel="content">✏️ Site Content</button>
+        </nav>
+        <div class="flex flex-col gap-2 p-4">
+          <a href="index.html" class="rounded-md border border-black/10 px-4 py-2 text-center text-sm font-semibold transition hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/10">View Site</a>
+          <button id="logoutBtn" class="rounded-md bg-red-500 px-4 py-2 text-center text-sm font-semibold text-white transition hover:opacity-90">Logout</button>
+        </div>
+      </aside>
 
+      <!-- ===================== -->
+      <!-- MAIN CONTENT          -->
+      <!-- ===================== -->
+      <div class="flex-1 overflow-y-auto">
         <!-- Header Stats -->
+        <div class="mx-auto max-w-7xl px-4 py-6">
         <div class="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div class="rounded-xl border border-black/10 bg-card p-4 dark:border-white/10 dark:bg-darkCard">
             <p id="dashTotal" class="text-3xl font-bold">0</p>
@@ -318,7 +330,7 @@
           </div>
         </div>
 
-        <!-- ===================== -->
+<!-- ===================== -->
         <!-- REQUESTS TAB          -->
         <!-- ===================== -->
         <div id="requestsTab" class="hidden">
@@ -340,6 +352,154 @@
             </table>
           </div>
         </div>
+
+<!-- ===================== -->
+        <!-- CONTENT TAB           -->
+        <!-- ===================== -->
+        <div id="contentTab" class="hidden">
+          <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <h2 class="text-xl font-bold">Edit Site Text</h2>
+            <button id="saveContentBtn" class="rounded-md bg-accentLight px-5 py-2 text-sm font-semibold text-ink transition hover:opacity-90 dark:bg-darkAccent dark:text-darkInk">Save Changes</button>
+          </div>
+          <p id="contentSaveStatus" class="mb-4 text-sm text-green-600 dark:text-green-400"></p>
+
+          <div class="grid gap-6 lg:grid-cols-2">
+            <!-- Hero -->
+            <section class="rounded-xl border border-black/10 bg-card p-4 dark:border-white/10 dark:bg-darkCard">
+              <h3 class="mb-3 text-lg font-semibold">Navigation</h3>
+              <div class="grid gap-3">
+                <label class="text-sm">Nav: Home<input id="cNavHome" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Nav: Mission<input id="cNavMission" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Nav: Impact<input id="cNavImpact" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Nav: Programs<input id="cNavPrograms" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Nav: Contact<input id="cNavContact" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+              </div>
+            </section>
+
+            <!-- Hero -->
+            <section class="rounded-xl border border-black/10 bg-card p-4 dark:border-white/10 dark:bg-darkCard">
+              <h3 class="mb-3 text-lg font-semibold">Hero Section</h3>
+              <div class="grid gap-3">
+                <label class="text-sm">Hero Badge<input id="cHeroBadge" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Hero Heading<textarea id="cHeroHeading" rows="2" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+                <label class="text-sm">Hero Description<textarea id="cHeroText" rows="2" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+                <label class="text-sm">Button 1 (Get Involved)<input id="cHeroBtn1" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Button 2 (View Impact)<input id="cHeroBtn2" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Why It Matters Heading<input id="cWhyHeading" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Why It Matters Text<textarea id="cWhyText" rows="2" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+                <label class="text-sm">Bullet 1<textarea id="cWhyBullet1" rows="1" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+                <label class="text-sm">Bullet 2<textarea id="cWhyBullet2" rows="1" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+                <label class="text-sm">Bullet 3<textarea id="cWhyBullet3" rows="1" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+              </div>
+            </section>
+
+            <!-- Mission -->
+            <section class="rounded-xl border border-black/10 bg-card p-4 dark:border-white/10 dark:bg-darkCard">
+              <h3 class="mb-3 text-lg font-semibold">Mission Section</h3>
+              <div class="grid gap-3">
+                <label class="text-sm">Heading<input id="cMissionHeading" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Subtext<textarea id="cMissionSubtext" rows="2" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+                <label class="text-sm">Card 1 Title<input id="cMission1Title" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Card 1 Text<textarea id="cMission1Text" rows="2" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+                <label class="text-sm">Card 2 Title<input id="cMission2Title" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Card 2 Text<textarea id="cMission2Text" rows="2" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+                <label class="text-sm">Card 3 Title<input id="cMission3Title" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Card 3 Text<textarea id="cMission3Text" rows="2" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+              </div>
+            </section>
+
+            <!-- Impact -->
+            <section class="rounded-xl border border-black/10 bg-card p-4 dark:border-white/10 dark:bg-darkCard">
+              <h3 class="mb-3 text-lg font-semibold">Impact Section</h3>
+              <div class="grid gap-3">
+                <label class="text-sm">Heading<input id="cImpactHeading" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Subtext<textarea id="cImpactSubtext" rows="2" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+                <label class="text-sm">Stat 1 Label<input id="cStat1Label" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Stat 2 Label<input id="cStat2Label" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Stat 3 Label<input id="cStat3Label" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+              </div>
+            </section>
+
+            <!-- Programs -->
+            <section class="rounded-xl border border-black/10 bg-card p-4 dark:border-white/10 dark:bg-darkCard">
+              <h3 class="mb-3 text-lg font-semibold">Programs Section</h3>
+              <div class="grid gap-3">
+                <label class="text-sm">Heading<input id="cProgramsHeading" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Subtext<textarea id="cProgramsSubtext" rows="2" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+                <label class="text-sm">Program 1 Title<input id="cProgram1Title" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Program 1 Text<textarea id="cProgram1Text" rows="2" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+                <label class="text-sm">Program 2 Title<input id="cProgram2Title" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Program 2 Text<textarea id="cProgram2Text" rows="2" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+                <label class="text-sm">Program 3 Title<input id="cProgram3Title" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Program 3 Text<textarea id="cProgram3Text" rows="2" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+              </div>
+            </section>
+
+            <!-- Contact -->
+            <section class="rounded-xl border border-black/10 bg-card p-4 dark:border-white/10 dark:bg-darkCard">
+              <h3 class="mb-3 text-lg font-semibold">Contact Section</h3>
+              <div class="grid gap-3">
+                <label class="text-sm">Heading<input id="cContactHeading" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Subtext<textarea id="cContactSubtext" rows="2" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+              </div>
+            </section>
+
+            <!-- Footer -->
+            <section class="rounded-xl border border-black/10 bg-card p-4 dark:border-white/10 dark:bg-darkCard">
+              <h3 class="mb-3 text-lg font-semibold">Footer - Brand &amp; Headings</h3>
+              <div class="grid gap-3">
+                <label class="text-sm">Brand Heading<input id="cFooterBrandHeading" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Brand Text<textarea id="cFooterBrandText" rows="2" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg"></textarea></label>
+                <label class="text-sm">Quick Links Heading<input id="cFooterQuickHeading" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Programs Heading<input id="cFooterProgramsHeading" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                <label class="text-sm">Contact &amp; Social Heading<input id="cFooterContactHeading" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+              </div>
+            </section>
+
+            <!-- Footer Links -->
+            <section class="rounded-xl border border-black/10 bg-card p-4 dark:border-white/10 dark:bg-darkCard">
+              <h3 class="mb-3 text-lg font-semibold">Footer - Quick Links</h3>
+              <div class="grid gap-3">
+                <div class="grid grid-cols-2 gap-2">
+                  <label class="text-sm">Link 1 Label<input id="cFooterQL1Label" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                  <label class="text-sm">Link 1 URL<input id="cFooterQL1Url" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <label class="text-sm">Link 2 Label<input id="cFooterQL2Label" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                  <label class="text-sm">Link 2 URL<input id="cFooterQL2Url" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <label class="text-sm">Link 3 Label<input id="cFooterQL3Label" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                  <label class="text-sm">Link 3 URL<input id="cFooterQL3Url" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <label class="text-sm">Link 4 Label<input id="cFooterQL4Label" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                  <label class="text-sm">Link 4 URL<input id="cFooterQL4Url" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                </div>
+              </div>
+            </section>
+
+            <!-- Footer Programs / Contact -->
+            <section class="rounded-xl border border-black/10 bg-card p-4 dark:border-white/10 dark:bg-darkCard lg:col-span-2">
+              <h3 class="mb-3 text-lg font-semibold">Footer - Programs &amp; Contact Info</h3>
+              <div class="grid gap-3 md:grid-cols-2">
+                <div class="grid gap-3">
+                  <label class="text-sm">Footer Program 1<input id="cFooterProgram1" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                  <label class="text-sm">Footer Program 2<input id="cFooterProgram2" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                  <label class="text-sm">Footer Program 3<input id="cFooterProgram3" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                  <label class="text-sm">Footer Program 4<input id="cFooterProgram4" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                </div>
+                <div class="grid gap-3">
+                  <label class="text-sm">Contact Item 1 (Email)<input id="cFooterContact1" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                  <label class="text-sm">Contact Item 2 (Phone)<input id="cFooterContact2" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                  <label class="text-sm">Contact Item 3 (Social)<input id="cFooterContact3" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                  <label class="text-sm">Contact Item 4 (LinkedIn)<input id="cFooterContact4" type="text" class="mt-1 w-full rounded-md border border-black/10 bg-cream px-3 py-2 dark:border-white/10 dark:bg-darkBg" /></label>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
 
@@ -504,8 +664,9 @@
       // =============================
       // Dashboard open/close
       // =============================
-      function openDashboard() {
+function openDashboard() {
         dashboard.classList.remove("hidden");
+        dashboard.classList.add("flex");
         renderInventory();
         renderRequests();
         renderDashboardStats();
@@ -732,22 +893,261 @@
         }
       });
 
+// =============================
+      // Sidebar navigation
       // =============================
-      // Tabs
+      const contentTab = document.getElementById("contentTab");
+      const saveContentBtn = document.getElementById("saveContentBtn");
+      const contentSaveStatus = document.getElementById("contentSaveStatus");
+
+      function setPanel(panel) {
+        const activeCls = "bg-accentLight text-ink dark:bg-darkAccent dark:text-darkInk";
+        const inactiveCls = "text-sub hover:bg-black/5 dark:text-darkSub dark:hover:bg-white/10";
+        document.querySelectorAll(".side-nav").forEach((btn) => {
+          btn.className = `side-nav w-full rounded-md px-3 py-2 text-left text-sm font-semibold ${btn.dataset.panel === panel ? activeCls : inactiveCls}`;
+        });
+        inventoryTab.classList.toggle("hidden", panel !== "inventory");
+        requestsTab.classList.toggle("hidden", panel !== "requests");
+        contentTab.classList.toggle("hidden", panel !== "content");
+        if (panel === "content") populateContentFields();
+      }
+      document.querySelectorAll(".side-nav").forEach((btn) => btn.addEventListener("click", () => setPanel(btn.dataset.panel)));
+
+// =============================
+      // Site content editor (matches public index.html schema)
       // =============================
-      function setTab(tab) {
-        const active = "rounded-md bg-accentLight px-4 py-2 text-sm font-semibold text-ink dark:bg-darkAccent dark:text-darkInk";
-        const inactive = "rounded-md bg-black/5 px-4 py-2 text-sm font-semibold text-sub dark:bg-white/10 dark:text-darkSub";
-        if (tab === "inventory") {
-          tabInventory.className = active; tabRequests.className = inactive;
-          inventoryTab.classList.remove("hidden"); requestsTab.classList.add("hidden");
-        } else {
-          tabRequests.className = active; tabInventory.className = inactive;
-          requestsTab.classList.remove("hidden"); inventoryTab.classList.add("hidden");
+      const SITE_DATA_KEY = "circuitrelay-site-data";
+      const defaultSiteData = {
+        stats: {
+          lbsDiverted: 1500,
+          laptopsDeployed: 50,
+          freeServicePercent: 100,
+        },
+        content: {
+          heroBadge: "Community Technology + Circular Impact",
+          heroHeading: "Building Tech Equity Through Smart Reuse",
+          heroSubtext: "We recover, refurbish, and redistribute technology to close digital gaps while reducing environmental waste.",
+          heroBtnInvolved: "Get Involved",
+          heroBtnImpact: "View Impact",
+          whyHeading: "Why It Matters",
+          whyText: "We design efficient pathways from donation to deployment, ensuring useful devices reach people who need them most.",
+          whyBullet1: "Operationally efficient intake and routing",
+          whyBullet2: "Secure refurbishment and quality checks",
+          whyBullet3: "Community-first, no-cost delivery model",
+          missionHeading: "Our Mission",
+          missionSubtext: "Structured programs that improve access, sustainability, and community outcomes.",
+          missionCard1Title: "Supply Chain Optimization",
+          missionCard1Text: "We streamline collection, sorting, and deployment to reduce waste and improve turnaround.",
+          missionCard2Title: "Refurbishing Tech",
+          missionCard2Text: "Donated devices are securely cleaned, repaired, and validated before distribution.",
+          missionCard3Title: "Community Equity",
+          missionCard3Text: "We prioritize equitable access so technology can unlock education and opportunity.",
+          impactHeading: "Impact Tracker",
+          impactSubtext: "Performance metrics that show measurable outcomes.",
+          statLbsLabel: "Lbs Diverted",
+          statLaptopsLabel: "Laptops Deployed",
+          statFreeLabel: "Free Service (%)",
+          programsHeading: "Programs in Motion",
+          programsSubtext: "A guided experience for donors, volunteers, and recipients.",
+          program1Title: "Donor Route",
+          program1Text: "Schedule pickup, track acceptance, and receive impact updates.",
+          program2Title: "Volunteer Route",
+          program2Text: "Join refurbishment events, logistics teams, and outreach drives.",
+          program3Title: "Recipient Route",
+          program3Text: "Apply for devices and receive personalized onboarding support.",
+          contactHeading: "Contact Us",
+          contactSubtext: "Tell us how you want to partner and we will follow up.",
+        },
+        nav: {
+          home: "Home",
+          mission: "Mission",
+          impact: "Impact",
+          programs: "Programs",
+          contact: "Contact",
+        },
+        footer: {
+          brandHeading: "CircuitRelay",
+          brandText: "Connecting communities with technology access through sustainable engineering workflows.",
+          quickLinksHeading: "Quick Links",
+          quickLinks: [
+            { label: "Home", url: "#home" },
+            { label: "About Us", url: "#mission" },
+            { label: "Impact", url: "#impact" },
+            { label: "Contact", url: "#contact" },
+          ],
+          programsHeading: "Programs",
+          programs: ["Student Device Access", "Refurbishment Lab", "Community Workshops", "Engineering Exposure"],
+          contactHeading: "Contact & Social",
+          contact: ["team@circuitrelay.org", "(000) 000-0000", "@circuitrelay", "CircuitRelay on LinkedIn"],
+        },
+        bottomBar: {
+          leftText: "(c) 2026 CircuitRelay - Community engineering for digital equity.",
+          rightLabel: "Privacy Policy",
+          rightUrl: "#",
+        },
+      };
+
+      function loadSiteDataMerged() {
+        const raw = localStorage.getItem(SITE_DATA_KEY);
+        if (!raw) return JSON.parse(JSON.stringify(defaultSiteData));
+        try {
+          const parsed = JSON.parse(raw);
+          const merged = JSON.parse(JSON.stringify(defaultSiteData));
+          merged.stats = { ...merged.stats, ...(parsed.stats || {}) };
+          merged.content = { ...merged.content, ...(parsed.content || {}) };
+          merged.nav = { ...merged.nav, ...(parsed.nav || {}) };
+          merged.footer = { ...merged.footer, ...(parsed.footer || {}) };
+          if (parsed.footer && Array.isArray(parsed.footer.quickLinks)) merged.footer.quickLinks = parsed.footer.quickLinks;
+          if (parsed.footer && Array.isArray(parsed.footer.programs)) merged.footer.programs = parsed.footer.programs;
+          if (parsed.footer && Array.isArray(parsed.footer.contact)) merged.footer.contact = parsed.footer.contact;
+          merged.bottomBar = { ...merged.bottomBar, ...(parsed.bottomBar || {}) };
+          return merged;
+        } catch {
+          return JSON.parse(JSON.stringify(defaultSiteData));
         }
       }
-      tabInventory.addEventListener("click", () => setTab("inventory"));
-      tabRequests.addEventListener("click", () => setTab("requests"));
+
+      let siteData = loadSiteDataMerged();
+
+      function populateContentFields() {
+        const c = siteData.content;
+        const n = siteData.nav;
+        const f = siteData.footer;
+        const set = (id, val) => {
+          const el = document.getElementById(id);
+          if (el) el.value = val || "";
+        };
+        // Nav
+        set("cNavHome", n.home); set("cNavMission", n.mission);
+        set("cNavImpact", n.impact); set("cNavPrograms", n.programs); set("cNavContact", n.contact);
+        // Hero
+        set("cHeroBadge", c.heroBadge); set("cHeroHeading", c.heroHeading); set("cHeroText", c.heroSubtext);
+        set("cHeroBtn1", c.heroBtnInvolved); set("cHeroBtn2", c.heroBtnImpact);
+        set("cWhyHeading", c.whyHeading); set("cWhyText", c.whyText);
+        set("cWhyBullet1", c.whyBullet1); set("cWhyBullet2", c.whyBullet2); set("cWhyBullet3", c.whyBullet3);
+        // Mission
+        set("cMissionHeading", c.missionHeading); set("cMissionSubtext", c.missionSubtext);
+        set("cMission1Title", c.missionCard1Title); set("cMission1Text", c.missionCard1Text);
+        set("cMission2Title", c.missionCard2Title); set("cMission2Text", c.missionCard2Text);
+        set("cMission3Title", c.missionCard3Title); set("cMission3Text", c.missionCard3Text);
+        // Impact
+        set("cImpactHeading", c.impactHeading); set("cImpactSubtext", c.impactSubtext);
+        set("cStat1Label", c.statLbsLabel); set("cStat2Label", c.statLaptopsLabel); set("cStat3Label", c.statFreeLabel);
+        // Programs
+        set("cProgramsHeading", c.programsHeading); set("cProgramsSubtext", c.programsSubtext);
+        set("cProgram1Title", c.program1Title); set("cProgram1Text", c.program1Text);
+        set("cProgram2Title", c.program2Title); set("cProgram2Text", c.program2Text);
+        set("cProgram3Title", c.program3Title); set("cProgram3Text", c.program3Text);
+        // Contact
+        set("cContactHeading", c.contactHeading); set("cContactSubtext", c.contactSubtext);
+        // Footer headings/brand
+        set("cFooterBrandHeading", f.brandHeading); set("cFooterBrandText", f.brandText);
+        set("cFooterQuickHeading", f.quickLinksHeading); set("cFooterProgramsHeading", f.programsHeading);
+        set("cFooterContactHeading", f.contactHeading);
+        // Footer quick links
+        if (f.quickLinks.length >= 4) {
+          set("cFooterQL1Label", f.quickLinks[0].label); set("cFooterQL1Url", f.quickLinks[0].url);
+          set("cFooterQL2Label", f.quickLinks[1].label); set("cFooterQL2Url", f.quickLinks[1].url);
+          set("cFooterQL3Label", f.quickLinks[2].label); set("cFooterQL3Url", f.quickLinks[2].url);
+          set("cFooterQL4Label", f.quickLinks[3].label); set("cFooterQL4Url", f.quickLinks[3].url);
+        }
+        // Footer programs + contact
+        if (f.programs.length >= 4) {
+          set("cFooterProgram1", f.programs[0]); set("cFooterProgram2", f.programs[1]);
+          set("cFooterProgram3", f.programs[2]); set("cFooterProgram4", f.programs[3]);
+        }
+        if (f.contact.length >= 4) {
+          set("cFooterContact1", f.contact[0]); set("cFooterContact2", f.contact[1]);
+          set("cFooterContact3", f.contact[2]); set("cFooterContact4", f.contact[3]);
+        }
+        contentSaveStatus.textContent = "";
+      }
+
+      saveContentBtn.addEventListener("click", () => {
+        const get = (id) => {
+          const el = document.getElementById(id);
+          return el ? el.value.trim() : "";
+        };
+
+        // Nav
+        siteData.nav.home = get("cNavHome");
+        siteData.nav.mission = get("cNavMission");
+        siteData.nav.impact = get("cNavImpact");
+        siteData.nav.programs = get("cNavPrograms");
+        siteData.nav.contact = get("cNavContact");
+
+        // Hero
+        const c = siteData.content;
+        c.heroBadge = get("cHeroBadge");
+        c.heroHeading = get("cHeroHeading");
+        c.heroSubtext = get("cHeroText");
+        c.heroBtnInvolved = get("cHeroBtn1");
+        c.heroBtnImpact = get("cHeroBtn2");
+        c.whyHeading = get("cWhyHeading");
+        c.whyText = get("cWhyText");
+        c.whyBullet1 = get("cWhyBullet1");
+        c.whyBullet2 = get("cWhyBullet2");
+        c.whyBullet3 = get("cWhyBullet3");
+
+        // Mission
+        c.missionHeading = get("cMissionHeading");
+        c.missionSubtext = get("cMissionSubtext");
+        c.missionCard1Title = get("cMission1Title");
+        c.missionCard1Text = get("cMission1Text");
+        c.missionCard2Title = get("cMission2Title");
+        c.missionCard2Text = get("cMission2Text");
+        c.missionCard3Title = get("cMission3Title");
+        c.missionCard3Text = get("cMission3Text");
+
+        // Impact
+        c.impactHeading = get("cImpactHeading");
+        c.impactSubtext = get("cImpactSubtext");
+        c.statLbsLabel = get("cStat1Label");
+        c.statLaptopsLabel = get("cStat2Label");
+        c.statFreeLabel = get("cStat3Label");
+
+        // Programs
+        c.programsHeading = get("cProgramsHeading");
+        c.programsSubtext = get("cProgramsSubtext");
+        c.program1Title = get("cProgram1Title");
+        c.program1Text = get("cProgram1Text");
+        c.program2Title = get("cProgram2Title");
+        c.program2Text = get("cProgram2Text");
+        c.program3Title = get("cProgram3Title");
+        c.program3Text = get("cProgram3Text");
+
+        // Contact
+        c.contactHeading = get("cContactHeading");
+        c.contactSubtext = get("cContactSubtext");
+
+        // Footer
+        const f = siteData.footer;
+        f.brandHeading = get("cFooterBrandHeading");
+        f.brandText = get("cFooterBrandText");
+        f.quickLinksHeading = get("cFooterQuickHeading");
+        f.programsHeading = get("cFooterProgramsHeading");
+        f.contactHeading = get("cFooterContactHeading");
+        f.quickLinks = [
+          { label: get("cFooterQL1Label"), url: get("cFooterQL1Url") },
+          { label: get("cFooterQL2Label"), url: get("cFooterQL2Url") },
+          { label: get("cFooterQL3Label"), url: get("cFooterQL3Url") },
+          { label: get("cFooterQL4Label"), url: get("cFooterQL4Url") },
+        ];
+        f.programs = [get("cFooterProgram1"), get("cFooterProgram2"), get("cFooterProgram3"), get("cFooterProgram4")];
+        f.contact = [get("cFooterContact1"), get("cFooterContact2"), get("cFooterContact3"), get("cFooterContact4")];
+
+        localStorage.setItem(SITE_DATA_KEY, JSON.stringify(siteData));
+        contentSaveStatus.textContent = "Site content saved successfully! It will appear on the public site (index.html) on next load.";
+      });
+
+      // =============================
+      // Old tab functions (kept for compatibility)
+      // =============================
+      function setTab(tab) {
+        setPanel(tab === "inventory" ? "inventory" : "requests");
+      }
+      tabInventory.addEventListener("click", () => setPanel("inventory"));
+      tabRequests.addEventListener("click", () => setPanel("requests"));
 
       // =============================
       // Theme toggle

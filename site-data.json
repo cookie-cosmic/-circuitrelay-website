@@ -1,1 +1,80 @@
-{}
+{
+  "stats": {
+    "lbsDiverted": 1500,
+    "laptopsDeployed": 50,
+    "freeServicePercent": 100
+  },
+  "content": {
+    "heroBadge": "Community Technology + Circular Impact",
+    "heroHeading": "Building Tech Equity Through Smart Reuse",
+    "heroSubtext": "We recover, refurbish, and redistribute technology to close digital gaps while reducing environmental waste.",
+    "heroBtnInvolved": "Get Involved",
+    "heroBtnImpact": "View Impact",
+    "whyHeading": "Why It Matters",
+    "whyText": "We design efficient pathways from donation to deployment, ensuring useful devices reach people who need them most.",
+    "whyBullet1": "Operationally efficient intake and routing",
+    "whyBullet2": "Secure refurbishment and quality checks",
+    "whyBullet3": "Community-first, no-cost delivery model",
+    "missionHeading": "Our Mission",
+    "missionSubtext": "Structured programs that improve access, sustainability, and community outcomes.",
+    "missionCard1Title": "Supply Chain Optimization",
+    "missionCard1Text": "We streamline collection, sorting, and deployment to reduce waste and improve turnaround.",
+    "missionCard2Title": "Refurbishing Tech",
+    "missionCard2Text": "Donated devices are securely cleaned, repaired, and validated before distribution.",
+    "missionCard3Title": "Community Equity",
+    "missionCard3Text": "We prioritize equitable access so technology can unlock education and opportunity.",
+    "impactHeading": "Impact Tracker",
+    "impactSubtext": "Performance metrics that show measurable outcomes.",
+    "statLbsLabel": "Lbs Diverted",
+    "statLaptopsLabel": "Laptops Deployed",
+    "statFreeLabel": "Free Service (%)",
+    "programsHeading": "Programs in Motion",
+    "programsSubtext": "A guided experience for donors, volunteers, and recipients.",
+    "program1Title": "Donor Route",
+    "program1Text": "Schedule pickup, track acceptance, and receive impact updates.",
+    "program2Title": "Volunteer Route",
+    "program2Text": "Join refurbishment events, logistics teams, and outreach drives.",
+    "program3Title": "Recipient Route",
+    "program3Text": "Apply for devices and receive personalized onboarding support.",
+    "contactHeading": "Contact Us",
+    "contactSubtext": "Tell us how you want to partner and we will follow up."
+  },
+  "nav": {
+    "home": "Home",
+    "mission": "Mission",
+    "impact": "Impact",
+    "programs": "Programs",
+    "contact": "Contact"
+  },
+  "footer": {
+    "brandHeading": "CircuitRelay",
+    "brandText": "Connecting communities with technology access through sustainable engineering workflows.",
+    "quickLinksHeading": "Quick Links",
+    "quickLinks": [
+      { "label": "Home", "url": "#home" },
+      { "label": "About Us", "url": "#mission" },
+      { "label": "Impact", "url": "#impact" },
+      { "label": "Contact", "url": "#contact" }
+    ],
+    "programsHeading": "Programs",
+    "programs": [
+      "Student Device Access",
+      "Refurbishment Lab",
+      "Community Workshops",
+      "Engineering Exposure"
+    ],
+    "contactHeading": "Contact & Social",
+    "contact": [
+      "team@circuitrelay.org",
+      "(000) 000-0000",
+      "@circuitrelay",
+      "CircuitRelay on LinkedIn"
+    ]
+  },
+  "bottomBar": {
+    "leftText": "(c) 2026 CircuitRelay - Community engineering for digital equity.",
+    "rightLabel": "Privacy Policy",
+    "rightUrl": "#"
+  },
+  "messages": []
+}

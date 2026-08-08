@@ -9,6 +9,6 @@ Make most page text editable from the Admin Panel, then push changes to GitHub.
 - [x] Add IDs to footer (brand, quick links, programs, contact columns)
 - [x] Add comprehensive "Edit Text" sections to the Admin Panel
 - [x] Wire all new fields into render/save logic (defaultSiteData, renderSiteFromData, renderAdminFields, saveAdminChangesBtn)
-- [x] Verify the complete updated index.html
+- [x] Rewrite admin dashboard Site Content editor to match public index.html schema (localStorage key: circuitrelay-site-data)
+- [x] Update site-data.json to the full schema (content, nav, footer, stats, bottomBar)
 - [x] Push changes to GitHub (https://github.com/cookie-cosmic/-circuitrelay-website)
-  - Commit b66e76d pushed to main (index.html + worker.js)
