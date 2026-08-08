@@ -388,26 +388,32 @@
           <button id="signupTabBtn" class="rounded-md bg-theme-lightGrey px-3 py-2 text-sm font-semibold text-theme-textSecondary dark:bg-theme-charcoal dark:text-theme-darkTextSecondary">Signup</button>
         </div>
 
-        <!-- Regular Login -->
+<!-- Regular Login -->
         <form id="loginForm" class="space-y-4">
+          <p id="loginErrorMsg" class="hidden text-sm font-semibold text-red-500">Invalid username/email or password.</p>
           <div>
-            <label for="loginEmail" class="mb-2 block text-sm text-theme-textSecondary dark:text-theme-darkTextSecondary">Email</label>
-            <input id="loginEmail" type="email" required class="w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 outline-none focus:ring-2 focus:ring-theme-dustyBlue dark:border-theme-darkBorder dark:bg-theme-slate dark:text-theme-darkText dark:focus:ring-theme-darkDustyBlue" />
+            <label for="loginEmail" class="mb-2 block text-sm text-theme-textSecondary dark:text-theme-darkTextSecondary">Username or Email</label>
+            <input id="loginEmail" type="text" required class="w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 outline-none focus:ring-2 focus:ring-theme-dustyBlue dark:border-theme-darkBorder dark:bg-theme-slate dark:text-theme-darkText dark:focus:ring-theme-darkDustyBlue" />
           </div>
           <div>
             <label for="loginPassword" class="mb-2 block text-sm text-theme-textSecondary dark:text-theme-darkTextSecondary">Password</label>
             <input id="loginPassword" type="password" required class="w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 outline-none focus:ring-2 focus:ring-theme-dustyBlue dark:border-theme-darkBorder dark:bg-theme-slate dark:text-theme-darkText dark:focus:ring-theme-darkDustyBlue" />
           </div>
           <button type="submit" class="w-full rounded-md bg-theme-dustyBlue px-4 py-2 font-semibold text-theme-text hover:bg-theme-sage dark:bg-theme-darkDustyBlue dark:text-theme-darkText dark:hover:bg-theme-darkSage">
-            Login with Email
+            Login
           </button>
         </form>
 
         <!-- Regular Signup -->
         <form id="signupForm" class="hidden space-y-4">
+          <p id="signupErrorMsg" class="hidden text-sm font-semibold text-red-500"></p>
           <div>
             <label for="signupName" class="mb-2 block text-sm text-theme-textSecondary dark:text-theme-darkTextSecondary">Full Name</label>
             <input id="signupName" type="text" required class="w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 outline-none focus:ring-2 focus:ring-theme-dustyBlue dark:border-theme-darkBorder dark:bg-theme-slate dark:text-theme-darkText dark:focus:ring-theme-darkDustyBlue" />
+          </div>
+          <div>
+            <label for="signupUsername" class="mb-2 block text-sm text-theme-textSecondary dark:text-theme-darkTextSecondary">Username</label>
+            <input id="signupUsername" type="text" required class="w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 outline-none focus:ring-2 focus:ring-theme-dustyBlue dark:border-theme-darkBorder dark:bg-theme-slate dark:text-theme-darkText dark:focus:ring-theme-darkDustyBlue" />
           </div>
           <div>
             <label for="signupEmail" class="mb-2 block text-sm text-theme-textSecondary dark:text-theme-darkTextSecondary">Email</label>
@@ -418,7 +424,7 @@
             <input id="signupPassword" type="password" minlength="8" required class="w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 outline-none focus:ring-2 focus:ring-theme-dustyBlue dark:border-theme-darkBorder dark:bg-theme-slate dark:text-theme-darkText dark:focus:ring-theme-darkDustyBlue" />
           </div>
           <button type="submit" class="w-full rounded-md bg-theme-dustyBlue px-4 py-2 font-semibold text-theme-text hover:bg-theme-sage dark:bg-theme-darkDustyBlue dark:text-theme-darkText dark:hover:bg-theme-darkSage">
-            Signup with Email
+            Signup
           </button>
         </form>
       </div>
@@ -714,29 +720,96 @@
         if (event.target === authModal) closeAuth();
       });
 
+// =============================
+      // User store (localStorage)
+      // =============================
+      const USERS_KEY = "cr-users";
+      function loadUsers() {
+        try {
+          return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+        } catch { return []; }
+      }
+      function saveUsers(users) {
+        localStorage.setItem(USERS_KEY, JSON.stringify(users));
+      }
+
+      // Admin credentials (checked against local users as well)
+      const ADMIN_USERNAME = "Addy";
+      const ADMIN_PASSWORD = "Addy@1234";
+
       loginForm.addEventListener("submit", (event) => {
         event.preventDefault();
-        const email = document.getElementById("loginEmail").value.trim();
+        const loginErrorMsg = document.getElementById("loginErrorMsg");
+        const identifier = document.getElementById("loginEmail").value.trim();
         const password = document.getElementById("loginPassword").value;
-        if (!email || !password) {
-          alert("Please enter your email and password.");
+        if (!identifier || !password) {
+          loginErrorMsg.textContent = "Please enter your username/email and password.";
+          loginErrorMsg.classList.remove("hidden");
           return;
         }
-        alert("User login successful (mock).");
+
+        // Check admin credentials first
+        if (identifier === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+          sessionStorage.setItem(DASH_AUTH_KEY, "true");
+          loginForm.reset();
+          closeAuth();
+          syncAdminAccessVisibility();
+          alert("Welcome back, Admin.");
+          return;
+        }
+
+        // Check registered users (by username or email)
+        const users = loadUsers();
+        const user = users.find(
+          (u) =>
+            (u.username.toLowerCase() === identifier.toLowerCase() || u.email.toLowerCase() === identifier.toLowerCase()) &&
+            u.password === password
+        );
+
+        if (!user) {
+          loginErrorMsg.textContent = "Invalid username/email or password.";
+          loginErrorMsg.classList.remove("hidden");
+          return;
+        }
+        sessionStorage.setItem("cr-user", user.username);
         loginForm.reset();
         closeAuth();
+        alert(`Welcome back, ${user.username}!`);
       });
 
       signupForm.addEventListener("submit", (event) => {
         event.preventDefault();
+        const signupErrorMsg = document.getElementById("signupErrorMsg");
         const name = document.getElementById("signupName").value.trim();
+        const username = document.getElementById("signupUsername").value.trim();
         const email = document.getElementById("signupEmail").value.trim();
         const password = document.getElementById("signupPassword").value;
-        if (!name || !email || password.length < 8) {
-          alert("Please provide valid signup details (minimum password length: 8).");
+        signupErrorMsg.classList.add("hidden");
+
+        if (!name || !username || !email || password.length < 8) {
+          signupErrorMsg.textContent = "Please provide all details (password must be at least 8 characters).";
+          signupErrorMsg.classList.remove("hidden");
           return;
         }
-        alert("Signup successful (mock).");
+
+        const users = loadUsers();
+        const usernameTaken = users.some((u) => u.username.toLowerCase() === username.toLowerCase());
+        const emailTaken = users.some((u) => u.email.toLowerCase() === email.toLowerCase());
+
+        if (usernameTaken) {
+          signupErrorMsg.textContent = "That username is already taken. Please choose another.";
+          signupErrorMsg.classList.remove("hidden");
+          return;
+        }
+        if (emailTaken) {
+          signupErrorMsg.textContent = "An account with that email already exists.";
+          signupErrorMsg.classList.remove("hidden");
+          return;
+        }
+
+        users.push({ name, username, email, password });
+        saveUsers(users);
+        alert("Signup successful! You can now log in.");
         signupForm.reset();
         setActiveAuthTab("login");
       });
