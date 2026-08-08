@@ -99,7 +99,7 @@
     <!-- ============================= -->
     <header class="fixed inset-x-0 top-0 z-50 border-b border-theme-border/80 bg-theme-offWhite/90 backdrop-blur dark:border-theme-darkBorder dark:bg-theme-slate/90">
       <nav class="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-<!-- CircuitRelay Logo (light + dark mode) -->
+        <!-- CircuitRelay Logo (light + dark mode) -->
         <a
           href="#home"
           class="flex h-14 w-52 items-center justify-center rounded-md bg-theme-surface px-2 transition hover:opacity-90 dark:bg-theme-darkSurface"
@@ -157,12 +157,13 @@
           >
             Login / Signup
           </button>
-          <button
-            id="adminPanelBtn"
+          <a
+            id="adminAccessBtn"
+            href="admin-dashboard.html"
             class="hidden rounded-md bg-theme-sand px-4 py-2 text-sm font-semibold text-theme-text transition hover:bg-theme-blush dark:bg-theme-darkSand dark:text-theme-darkText dark:hover:bg-theme-darkBlush"
           >
-            Admin Panel
-          </button>
+            Admin Access
+          </a>
         </div>
       </nav>
     </header>
@@ -178,7 +179,6 @@
 
         <div class="relative mx-auto grid w-full max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
           <div class="reveal">
-            <!-- CUSTOMIZE: Hero copy -->
             <p id="heroBadge" class="mb-3 inline-block rounded-full bg-theme-surface px-3 py-1 text-xs font-semibold text-theme-textSecondary shadow-soft dark:bg-theme-darkSurface dark:text-theme-darkTextSecondary dark:shadow-darkSoft">
               Community Technology + Circular Impact
             </p>
@@ -363,7 +363,6 @@
         </div>
       </div>
 
-      <!-- CUSTOMIZE: Bottom bar editable from Admin Panel -->
       <div class="border-t border-theme-border bg-theme-surface dark:border-theme-darkBorder dark:bg-theme-darkSurface">
         <div class="mx-auto flex w-full max-w-7xl flex-col gap-3 px-4 py-4 text-sm text-theme-textMuted sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8 dark:text-theme-darkTextMuted">
           <p id="bottomBarLeftText">(c) 2026 CircuitRelay - Community engineering for digital equity.</p>
@@ -373,7 +372,7 @@
     </footer>
 
     <!-- ============================= -->
-    <!-- Auth Modal                    -->
+    <!-- Auth Modal (Login / Signup)   -->
     <!-- ============================= -->
     <div id="authModal" class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/50 p-4" role="dialog" aria-modal="true" aria-labelledby="authTitle">
       <div class="w-full max-w-md rounded-xl border border-theme-border bg-theme-surface p-6 shadow-soft dark:border-theme-darkBorder dark:bg-theme-darkSurface dark:shadow-darkSoft">
@@ -387,7 +386,6 @@
         <div class="mb-4 flex flex-wrap gap-2">
           <button id="loginTabBtn" class="rounded-md bg-theme-dustyBlue px-3 py-2 text-sm font-semibold text-theme-text dark:bg-theme-darkDustyBlue dark:text-theme-darkText">Login</button>
           <button id="signupTabBtn" class="rounded-md bg-theme-lightGrey px-3 py-2 text-sm font-semibold text-theme-textSecondary dark:bg-theme-charcoal dark:text-theme-darkTextSecondary">Signup</button>
-          <button id="adminTabBtn" class="rounded-md bg-theme-lightGrey px-3 py-2 text-sm font-semibold text-theme-textSecondary dark:bg-theme-charcoal dark:text-theme-darkTextSecondary">Admin Login</button>
         </div>
 
         <!-- Regular Login -->
@@ -423,354 +421,16 @@
             Signup with Email
           </button>
         </form>
-
-        <!-- Admin Login -->
-        <form id="adminLoginForm" class="hidden space-y-4">
-          <div>
-            <label for="adminUsername" class="mb-2 block text-sm text-theme-textSecondary dark:text-theme-darkTextSecondary">Admin Username</label>
-            <input id="adminUsername" type="text" required class="w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 outline-none focus:ring-2 focus:ring-theme-dustyBlue dark:border-theme-darkBorder dark:bg-theme-slate dark:text-theme-darkText dark:focus:ring-theme-darkDustyBlue" />
-          </div>
-          <div>
-            <label for="adminPassword" class="mb-2 block text-sm text-theme-textSecondary dark:text-theme-darkTextSecondary">Admin Password</label>
-            <input id="adminPassword" type="password" required class="w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 outline-none focus:ring-2 focus:ring-theme-dustyBlue dark:border-theme-darkBorder dark:bg-theme-slate dark:text-theme-darkText dark:focus:ring-theme-darkDustyBlue" />
-          </div>
-          <p id="adminLoginError" class="hidden text-sm font-semibold text-red-500">Invalid admin credentials.</p>
-          <button type="submit" class="w-full rounded-md bg-theme-sand px-4 py-2 font-semibold text-theme-text hover:bg-theme-blush dark:bg-theme-darkSand dark:text-theme-darkText dark:hover:bg-theme-darkBlush">
-            Login as Admin
-          </button>
-        </form>
-      </div>
-    </div>
-
-    <!-- ============================= -->
-    <!-- Admin Panel Modal             -->
-    <!-- ============================= -->
-    <div id="adminPanelModal" class="fixed inset-0 z-[80] hidden overflow-y-auto bg-black/60 p-4 sm:p-8" role="dialog" aria-modal="true" aria-labelledby="adminPanelTitle">
-      <div class="mx-auto w-full max-w-6xl rounded-xl border border-theme-border bg-theme-surface p-6 shadow-soft dark:border-theme-darkBorder dark:bg-theme-darkSurface dark:shadow-darkSoft">
-        <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h3 id="adminPanelTitle" class="text-2xl font-bold">Admin Panel</h3>
-            <p class="text-theme-textSecondary dark:text-theme-darkTextSecondary">Edit site stats, content, messages, and bottom bar text.</p>
-          </div>
-<div class="flex flex-wrap gap-2">
-            <a href="admin-dashboard.html" class="rounded-md bg-theme-dustyBlue px-4 py-2 text-sm font-semibold text-theme-text transition hover:bg-theme-sage dark:bg-theme-darkDustyBlue dark:text-theme-darkText dark:hover:bg-theme-darkSage">
-              Open Admin Dashboard
-            </a>
-            <button id="adminLogoutBtn" class="rounded-md bg-theme-blush px-4 py-2 text-sm font-semibold text-theme-text hover:bg-theme-sand dark:bg-theme-darkBlush dark:text-theme-darkText dark:hover:bg-theme-darkSand">
-              Logout Admin
-            </button>
-            <button id="closeAdminPanelBtn" class="rounded-md border border-theme-border px-4 py-2 text-sm font-semibold dark:border-theme-darkBorder">
-              Close
-            </button>
-          </div>
-        </div>
-
-        <div class="grid gap-6 lg:grid-cols-2">
-          <!-- Stats Editor -->
-          <section class="rounded-lg border border-theme-border p-4 dark:border-theme-darkBorder">
-            <h4 class="mb-3 text-lg font-semibold">Edit Impact Stats</h4>
-            <div class="grid gap-3">
-              <label class="text-sm">Lbs Diverted (number)
-                <input id="adminStatLbs" type="number" min="0" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Laptops Deployed (number)
-                <input id="adminStatLaptops" type="number" min="0" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Free Service (% number)
-                <input id="adminStatFree" type="number" min="0" max="100" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">"Lbs Diverted" label
-                <input id="adminStatLbsLabel" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">"Laptops Deployed" label
-                <input id="adminStatLaptopsLabel" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">"Free Service" label
-                <input id="adminStatFreeLabel" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-            </div>
-          </section>
-
-          <!-- Content Editor -->
-          <section class="rounded-lg border border-theme-border p-4 dark:border-theme-darkBorder">
-            <h4 class="mb-3 text-lg font-semibold">Hero & Contact Text</h4>
-            <div class="grid gap-3">
-              <label class="text-sm">Hero Badge
-                <input id="adminHeroBadge" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Hero Heading
-                <input id="adminHeroHeading" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Hero Description
-                <textarea id="adminHeroSubtext" rows="2" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate"></textarea>
-              </label>
-              <label class="text-sm">"Get Involved" button
-                <input id="adminHeroBtnInvolved" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">"View Impact" button
-                <input id="adminHeroBtnImpact" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">"Why It Matters" heading
-                <input id="adminWhyHeading" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">"Why It Matters" text
-                <textarea id="adminWhyText" rows="2" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate"></textarea>
-              </label>
-              <label class="text-sm">Why bullet 1
-                <input id="adminWhyBullet1" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Why bullet 2
-                <input id="adminWhyBullet2" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Why bullet 3
-                <input id="adminWhyBullet3" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Contact Heading
-                <input id="adminContactHeading" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Contact Description
-                <textarea id="adminContactSubtext" rows="2" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate"></textarea>
-              </label>
-            </div>
-          </section>
-
-          <!-- Mission & Programs Editor -->
-          <section class="rounded-lg border border-theme-border p-4 dark:border-theme-darkBorder">
-            <h4 class="mb-3 text-lg font-semibold">Mission Text</h4>
-            <div class="grid gap-3">
-              <label class="text-sm">Mission Heading
-                <input id="adminMissionHeading" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Mission Description
-                <textarea id="adminMissionSubtext" rows="2" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate"></textarea>
-              </label>
-              <label class="text-sm">Mission Card 1 Title
-                <input id="adminMissionCard1Title" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Mission Card 1 Text
-                <textarea id="adminMissionCard1Text" rows="2" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate"></textarea>
-              </label>
-              <label class="text-sm">Mission Card 2 Title
-                <input id="adminMissionCard2Title" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Mission Card 2 Text
-                <textarea id="adminMissionCard2Text" rows="2" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate"></textarea>
-              </label>
-              <label class="text-sm">Mission Card 3 Title
-                <input id="adminMissionCard3Title" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Mission Card 3 Text
-                <textarea id="adminMissionCard3Text" rows="2" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate"></textarea>
-              </label>
-            </div>
-          </section>
-
-          <!-- Impact & Programs Headings -->
-          <section class="rounded-lg border border-theme-border p-4 dark:border-theme-darkBorder">
-            <h4 class="mb-3 text-lg font-semibold">Impact & Programs Text</h4>
-            <div class="grid gap-3">
-              <label class="text-sm">Impact Heading
-                <input id="adminImpactHeading" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Impact Description
-                <textarea id="adminImpactSubtext" rows="2" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate"></textarea>
-              </label>
-              <label class="text-sm">Programs Heading
-                <input id="adminProgramsHeading" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Programs Description
-                <textarea id="adminProgramsSubtext" rows="2" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate"></textarea>
-              </label>
-              <label class="text-sm">Program 1 Title
-                <input id="adminProgram1Title" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Program 1 Text
-                <textarea id="adminProgram1Text" rows="2" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate"></textarea>
-              </label>
-              <label class="text-sm">Program 2 Title
-                <input id="adminProgram2Title" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Program 2 Text
-                <textarea id="adminProgram2Text" rows="2" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate"></textarea>
-              </label>
-              <label class="text-sm">Program 3 Title
-                <input id="adminProgram3Title" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Program 3 Text
-                <textarea id="adminProgram3Text" rows="2" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate"></textarea>
-              </label>
-            </div>
-          </section>
-
-          <!-- Nav Editor -->
-          <section class="rounded-lg border border-theme-border p-4 dark:border-theme-darkBorder">
-            <h4 class="mb-3 text-lg font-semibold">Navigation Text</h4>
-            <div class="grid gap-3">
-              <label class="text-sm">Home label
-                <input id="adminNavHome" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Mission label
-                <input id="adminNavMission" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Impact label
-                <input id="adminNavImpact" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Programs label
-                <input id="adminNavPrograms" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Contact label
-                <input id="adminNavContact" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-            </div>
-          </section>
-
-          <!-- Footer Editor -->
-          <section class="rounded-lg border border-theme-border p-4 dark:border-theme-darkBorder">
-            <h4 class="mb-3 text-lg font-semibold">Footer Text</h4>
-            <div class="grid gap-3">
-              <label class="text-sm">Brand Heading
-                <input id="adminFooterBrandHeading" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Brand Text
-                <textarea id="adminFooterBrandText" rows="2" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate"></textarea>
-              </label>
-              <label class="text-sm">Quick Links heading
-                <input id="adminFooterQuickLinksHeading" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Quick Link 1 label
-                <input id="adminFooterQuickLink1Label" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Quick Link 1 URL
-                <input id="adminFooterQuickLink1Url" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Quick Link 2 label
-                <input id="adminFooterQuickLink2Label" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Quick Link 2 URL
-                <input id="adminFooterQuickLink2Url" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Quick Link 3 label
-                <input id="adminFooterQuickLink3Label" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Quick Link 3 URL
-                <input id="adminFooterQuickLink3Url" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Quick Link 4 label
-                <input id="adminFooterQuickLink4Label" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Quick Link 4 URL
-                <input id="adminFooterQuickLink4Url" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-            </div>
-          </section>
-
-          <!-- Footer Programs & Contact Editor -->
-          <section class="rounded-lg border border-theme-border p-4 dark:border-theme-darkBorder">
-            <h4 class="mb-3 text-lg font-semibold">Footer Programs & Contact</h4>
-            <div class="grid gap-3">
-              <label class="text-sm">Programs heading
-                <input id="adminFooterProgramsHeading" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Footer Program 1
-                <input id="adminFooterProgram1" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Footer Program 2
-                <input id="adminFooterProgram2" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Footer Program 3
-                <input id="adminFooterProgram3" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Footer Program 4
-                <input id="adminFooterProgram4" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Contact & Social heading
-                <input id="adminFooterContactHeading" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Contact item 1
-                <input id="adminFooterContact1" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Contact item 2
-                <input id="adminFooterContact2" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Contact item 3
-                <input id="adminFooterContact3" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Contact item 4
-                <input id="adminFooterContact4" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-            </div>
-          </section>
-
-          <!-- Bottom Bar Editor -->
-          <section class="rounded-lg border border-theme-border p-4 dark:border-theme-darkBorder">
-            <h4 class="mb-3 text-lg font-semibold">Edit Bottom Bar</h4>
-            <div class="grid gap-3">
-              <label class="text-sm">Left Text
-                <input id="adminBottomLeft" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Right Link Label
-                <input id="adminBottomRightLabel" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-              <label class="text-sm">Right Link URL
-                <input id="adminBottomRightUrl" type="text" class="mt-1 w-full rounded-md border border-theme-border bg-theme-offWhite px-3 py-2 dark:border-theme-darkBorder dark:bg-theme-slate" />
-              </label>
-            </div>
-          </section>
-
-          <!-- Messages Viewer -->
-          <section class="rounded-lg border border-theme-border p-4 dark:border-theme-darkBorder">
-            <div class="mb-3 flex items-center justify-between gap-2">
-              <h4 class="text-lg font-semibold">Contact Messages</h4>
-              <button id="exportMessagesBtn" class="rounded-md bg-theme-dustyBlue px-3 py-2 text-sm font-semibold text-theme-text dark:bg-theme-darkDustyBlue dark:text-theme-darkText">
-                Export Messages
-              </button>
-            </div>
-            <div class="max-h-64 overflow-auto rounded border border-theme-border dark:border-theme-darkBorder">
-              <table class="min-w-full text-left text-sm">
-                <thead class="bg-theme-lightGrey dark:bg-theme-charcoal">
-                  <tr>
-                    <th class="px-3 py-2">Date</th>
-                    <th class="px-3 py-2">Name</th>
-                    <th class="px-3 py-2">Email</th>
-                    <th class="px-3 py-2">Role</th>
-                    <th class="px-3 py-2">Message</th>
-                    <th class="px-3 py-2">Status</th>
-                  </tr>
-                </thead>
-                <tbody id="adminMessagesBody"></tbody>
-              </table>
-            </div>
-          </section>
-        </div>
-
-        <div class="mt-6 flex flex-wrap gap-2">
-          <button id="saveAdminChangesBtn" class="rounded-md bg-theme-sage px-5 py-2.5 font-semibold text-theme-text hover:bg-theme-dustyBlue dark:bg-theme-darkSage dark:text-theme-darkText dark:hover:bg-theme-darkDustyBlue">
-            Save All Changes
-          </button>
-          <p id="adminSaveStatus" class="self-center text-sm text-theme-textSecondary dark:text-theme-darkTextSecondary"></p>
-        </div>
       </div>
     </div>
 
     <script>
-// =============================
-      // App constants
+      // =============================
+      // Constants
       // =============================
       const THEME_KEY = "circuitrelay-theme";
       const DATA_KEY = "circuitrelay-site-data";
-      const ADMIN_AUTH_KEY = "circuitrelay-admin-auth";
-      const ADMIN_USERNAME = "Addy";
-      const ADMIN_PASSWORD = "Addy@1234";
-
-// =============================
-      // Global sync config (Cloudflare Worker)
-      // The Worker securely reads/writes the GitHub site-data.json.
-      // No tokens are stored in this file.
-      // =============================
-      const WORKER_URL = "https://circuitrelay-sync.akn6722.workers.dev";
-      // The admin key is shared with the Worker to authorize writes.
-      // It is NOT a GitHub token; it only protects the Worker endpoint.
-      const ADMIN_SYNC_KEY = "cr_secure_admin_key_9f3a7b2c1d8e4f5a6b"; // matches ADMIN_KEY secret set in Cloudflare
+      const DASH_AUTH_KEY = "cr-dash-auth";
 
       // =============================
       // Default editable site data
@@ -843,11 +503,10 @@
           rightLabel: "Privacy Policy",
           rightUrl: "#",
         },
-        messages: [],
       };
 
       // =============================
-      // Utilities for state storage
+      // State storage
       // =============================
       function loadSiteData() {
         const raw = localStorage.getItem(DATA_KEY);
@@ -863,76 +522,25 @@
           if (parsed.footer && Array.isArray(parsed.footer.programs)) merged.footer.programs = parsed.footer.programs;
           if (parsed.footer && Array.isArray(parsed.footer.contact)) merged.footer.contact = parsed.footer.contact;
           merged.bottomBar = { ...merged.bottomBar, ...(parsed.bottomBar || {}) };
-          merged.messages = Array.isArray(parsed.messages) ? parsed.messages : [];
           return merged;
         } catch {
           return JSON.parse(JSON.stringify(defaultSiteData));
         }
       }
 
-function saveSiteData() {
-        localStorage.setItem(DATA_KEY, JSON.stringify(siteData));
-      }
+      let siteData = loadSiteData();
 
       // =============================
-      // Global sync via Cloudflare Worker
+      // Utilities
       // =============================
-      async function loadFromWorker() {
-        try {
-          const res = await fetch(WORKER_URL, { method: "GET", cache: "no-store" });
-          if (!res.ok) return false;
-          const text = await res.text();
-          const parsed = JSON.parse(text);
-          if (!parsed || typeof parsed !== "object") return false;
-          const merged = JSON.parse(JSON.stringify(defaultSiteData));
-          merged.stats = { ...merged.stats, ...(parsed.stats || {}) };
-          merged.content = { ...merged.content, ...(parsed.content || {}) };
-          merged.nav = { ...merged.nav, ...(parsed.nav || {}) };
-          merged.footer = { ...merged.footer, ...(parsed.footer || {}) };
-          if (parsed.footer && Array.isArray(parsed.footer.quickLinks)) merged.footer.quickLinks = parsed.footer.quickLinks;
-          if (parsed.footer && Array.isArray(parsed.footer.programs)) merged.footer.programs = parsed.footer.programs;
-          if (parsed.footer && Array.isArray(parsed.footer.contact)) merged.footer.contact = parsed.footer.contact;
-          merged.bottomBar = { ...merged.bottomBar, ...(parsed.bottomBar || {}) };
-          merged.messages = Array.isArray(parsed.messages) ? parsed.messages : [];
-          siteData = merged;
-          saveSiteData();
-          renderSiteFromData();
-          return true;
-        } catch {
-          return false;
-        }
-      }
-
-      async function saveToWorker() {
-        try {
-          const res = await fetch(WORKER_URL, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "x-admin-key": ADMIN_SYNC_KEY,
-            },
-            body: JSON.stringify({ data: siteData }),
-          });
-          return res.ok;
-        } catch {
-          return false;
-        }
-      }
-
-      function setAdminAuth(isAuthed) {
-        localStorage.setItem(ADMIN_AUTH_KEY, isAuthed ? "true" : "false");
-      }
-
-      function isAdminAuthed() {
-        return localStorage.getItem(ADMIN_AUTH_KEY) === "true";
-      }
-
       function formatPlus(value) {
         return `${Number(value).toLocaleString()}+`;
       }
-
       function formatPercent(value) {
         return `${Number(value)}%`;
+      }
+      function isAdminAuthed() {
+        return sessionStorage.getItem(DASH_AUTH_KEY) === "true";
       }
 
       // =============================
@@ -945,7 +553,6 @@ function saveSiteData() {
           document.documentElement.classList.remove("dark");
         }
       }
-
       const storedTheme = localStorage.getItem(THEME_KEY);
       if (storedTheme) {
         applyTheme(storedTheme);
@@ -960,342 +567,106 @@ function saveSiteData() {
       // =============================
       const themeToggleBtn = document.getElementById("themeToggleBtn");
       const authOpenBtn = document.getElementById("authOpenBtn");
-      const adminPanelBtn = document.getElementById("adminPanelBtn");
+      const adminAccessBtn = document.getElementById("adminAccessBtn");
       const authModal = document.getElementById("authModal");
       const closeAuthModal = document.getElementById("closeAuthModal");
       const loginTabBtn = document.getElementById("loginTabBtn");
       const signupTabBtn = document.getElementById("signupTabBtn");
-      const adminTabBtn = document.getElementById("adminTabBtn");
       const loginForm = document.getElementById("loginForm");
       const signupForm = document.getElementById("signupForm");
-      const adminLoginForm = document.getElementById("adminLoginForm");
-      const adminLoginError = document.getElementById("adminLoginError");
       const contactForm = document.getElementById("contactForm");
-      const adminPanelModal = document.getElementById("adminPanelModal");
-      const closeAdminPanelBtn = document.getElementById("closeAdminPanelBtn");
-      const adminLogoutBtn = document.getElementById("adminLogoutBtn");
-      const saveAdminChangesBtn = document.getElementById("saveAdminChangesBtn");
-      const adminSaveStatus = document.getElementById("adminSaveStatus");
-      const exportMessagesBtn = document.getElementById("exportMessagesBtn");
-      const adminMessagesBody = document.getElementById("adminMessagesBody");
-
-      // Public content references
-      const heroBadgeEl = document.getElementById("heroBadge");
-      const heroHeadingEl = document.getElementById("heroHeading");
-      const heroSubtextEl = document.getElementById("heroSubtext");
-      const heroBtnInvolvedEl = document.getElementById("heroBtnInvolved");
-      const heroBtnImpactEl = document.getElementById("heroBtnImpact");
-      const whyHeadingEl = document.getElementById("whyHeading");
-      const whyTextEl = document.getElementById("whyText");
-      const whyBullet1El = document.getElementById("whyBullet1");
-      const whyBullet2El = document.getElementById("whyBullet2");
-      const whyBullet3El = document.getElementById("whyBullet3");
-      const missionHeadingEl = document.getElementById("missionHeading");
-      const missionSubtextEl = document.getElementById("missionSubtext");
-      const missionCard1TitleEl = document.getElementById("missionCard1Title");
-      const missionCard1TextEl = document.getElementById("missionCard1Text");
-      const missionCard2TitleEl = document.getElementById("missionCard2Title");
-      const missionCard2TextEl = document.getElementById("missionCard2Text");
-      const missionCard3TitleEl = document.getElementById("missionCard3Title");
-      const missionCard3TextEl = document.getElementById("missionCard3Text");
-      const impactHeadingEl = document.getElementById("impactHeading");
-      const impactSubtextEl = document.getElementById("impactSubtext");
-      const statLbsValueEl = document.getElementById("statLbsValue");
-      const statLaptopsValueEl = document.getElementById("statLaptopsValue");
-      const statFreeValueEl = document.getElementById("statFreeValue");
-      const statLbsLabelEl = document.getElementById("statLbsLabel");
-      const statLaptopsLabelEl = document.getElementById("statLaptopsLabel");
-      const statFreeLabelEl = document.getElementById("statFreeLabel");
-      const programsHeadingEl = document.getElementById("programsHeading");
-      const programsSubtextEl = document.getElementById("programsSubtext");
-      const program1TitleEl = document.getElementById("program1Title");
-      const program1TextEl = document.getElementById("program1Text");
-      const program2TitleEl = document.getElementById("program2Title");
-      const program2TextEl = document.getElementById("program2Text");
-      const program3TitleEl = document.getElementById("program3Title");
-      const program3TextEl = document.getElementById("program3Text");
-      const contactHeadingEl = document.getElementById("contactHeading");
-      const contactSubtextEl = document.getElementById("contactSubtext");
-      const navHomeEl = document.getElementById("navHome");
-      const navMissionEl = document.getElementById("navMission");
-      const navImpactEl = document.getElementById("navImpact");
-      const navProgramsEl = document.getElementById("navPrograms");
-      const navContactEl = document.getElementById("navContact");
-      const footerBrandHeadingEl = document.getElementById("footerBrandHeading");
-      const footerBrandTextEl = document.getElementById("footerBrandText");
-      const footerQuickLinksHeadingEl = document.getElementById("footerQuickLinksHeading");
-      const footerQuickLink1El = document.getElementById("footerQuickLink1");
-      const footerQuickLink2El = document.getElementById("footerQuickLink2");
-      const footerQuickLink3El = document.getElementById("footerQuickLink3");
-      const footerQuickLink4El = document.getElementById("footerQuickLink4");
-      const footerProgramsHeadingEl = document.getElementById("footerProgramsHeading");
-      const footerProgram1El = document.getElementById("footerProgram1");
-      const footerProgram2El = document.getElementById("footerProgram2");
-      const footerProgram3El = document.getElementById("footerProgram3");
-      const footerProgram4El = document.getElementById("footerProgram4");
-      const footerContactHeadingEl = document.getElementById("footerContactHeading");
-      const footerContact1El = document.getElementById("footerContact1");
-      const footerContact2El = document.getElementById("footerContact2");
-      const footerContact3El = document.getElementById("footerContact3");
-      const footerContact4El = document.getElementById("footerContact4");
-      const bottomBarLeftTextEl = document.getElementById("bottomBarLeftText");
-      const bottomBarRightLinkEl = document.getElementById("bottomBarRightLink");
-
-      // Admin inputs
-      const adminStatLbsEl = document.getElementById("adminStatLbs");
-      const adminStatLaptopsEl = document.getElementById("adminStatLaptops");
-      const adminStatFreeEl = document.getElementById("adminStatFree");
-      const adminStatLbsLabelEl = document.getElementById("adminStatLbsLabel");
-      const adminStatLaptopsLabelEl = document.getElementById("adminStatLaptopsLabel");
-      const adminStatFreeLabelEl = document.getElementById("adminStatFreeLabel");
-      const adminHeroBadgeEl = document.getElementById("adminHeroBadge");
-      const adminHeroHeadingEl = document.getElementById("adminHeroHeading");
-      const adminHeroSubtextEl = document.getElementById("adminHeroSubtext");
-      const adminHeroBtnInvolvedEl = document.getElementById("adminHeroBtnInvolved");
-      const adminHeroBtnImpactEl = document.getElementById("adminHeroBtnImpact");
-      const adminWhyHeadingEl = document.getElementById("adminWhyHeading");
-      const adminWhyTextEl = document.getElementById("adminWhyText");
-      const adminWhyBullet1El = document.getElementById("adminWhyBullet1");
-      const adminWhyBullet2El = document.getElementById("adminWhyBullet2");
-      const adminWhyBullet3El = document.getElementById("adminWhyBullet3");
-      const adminMissionHeadingEl = document.getElementById("adminMissionHeading");
-      const adminMissionSubtextEl = document.getElementById("adminMissionSubtext");
-      const adminMissionCard1TitleEl = document.getElementById("adminMissionCard1Title");
-      const adminMissionCard1TextEl = document.getElementById("adminMissionCard1Text");
-      const adminMissionCard2TitleEl = document.getElementById("adminMissionCard2Title");
-      const adminMissionCard2TextEl = document.getElementById("adminMissionCard2Text");
-      const adminMissionCard3TitleEl = document.getElementById("adminMissionCard3Title");
-      const adminMissionCard3TextEl = document.getElementById("adminMissionCard3Text");
-      const adminImpactHeadingEl = document.getElementById("adminImpactHeading");
-      const adminImpactSubtextEl = document.getElementById("adminImpactSubtext");
-      const adminProgramsHeadingEl = document.getElementById("adminProgramsHeading");
-      const adminProgramsSubtextEl = document.getElementById("adminProgramsSubtext");
-      const adminProgram1TitleEl = document.getElementById("adminProgram1Title");
-      const adminProgram1TextEl = document.getElementById("adminProgram1Text");
-      const adminProgram2TitleEl = document.getElementById("adminProgram2Title");
-      const adminProgram2TextEl = document.getElementById("adminProgram2Text");
-      const adminProgram3TitleEl = document.getElementById("adminProgram3Title");
-      const adminProgram3TextEl = document.getElementById("adminProgram3Text");
-      const adminContactHeadingEl = document.getElementById("adminContactHeading");
-      const adminContactSubtextEl = document.getElementById("adminContactSubtext");
-      const adminNavHomeEl = document.getElementById("adminNavHome");
-      const adminNavMissionEl = document.getElementById("adminNavMission");
-      const adminNavImpactEl = document.getElementById("adminNavImpact");
-      const adminNavProgramsEl = document.getElementById("adminNavPrograms");
-      const adminNavContactEl = document.getElementById("adminNavContact");
-      const adminFooterBrandHeadingEl = document.getElementById("adminFooterBrandHeading");
-      const adminFooterBrandTextEl = document.getElementById("adminFooterBrandText");
-      const adminFooterQuickLinksHeadingEl = document.getElementById("adminFooterQuickLinksHeading");
-      const adminFooterQuickLink1LabelEl = document.getElementById("adminFooterQuickLink1Label");
-      const adminFooterQuickLink1UrlEl = document.getElementById("adminFooterQuickLink1Url");
-      const adminFooterQuickLink2LabelEl = document.getElementById("adminFooterQuickLink2Label");
-      const adminFooterQuickLink2UrlEl = document.getElementById("adminFooterQuickLink2Url");
-      const adminFooterQuickLink3LabelEl = document.getElementById("adminFooterQuickLink3Label");
-      const adminFooterQuickLink3UrlEl = document.getElementById("adminFooterQuickLink3Url");
-      const adminFooterQuickLink4LabelEl = document.getElementById("adminFooterQuickLink4Label");
-      const adminFooterQuickLink4UrlEl = document.getElementById("adminFooterQuickLink4Url");
-      const adminFooterProgramsHeadingEl = document.getElementById("adminFooterProgramsHeading");
-      const adminFooterProgram1El = document.getElementById("adminFooterProgram1");
-      const adminFooterProgram2El = document.getElementById("adminFooterProgram2");
-      const adminFooterProgram3El = document.getElementById("adminFooterProgram3");
-      const adminFooterProgram4El = document.getElementById("adminFooterProgram4");
-      const adminFooterContactHeadingEl = document.getElementById("adminFooterContactHeading");
-      const adminFooterContact1El = document.getElementById("adminFooterContact1");
-      const adminFooterContact2El = document.getElementById("adminFooterContact2");
-      const adminFooterContact3El = document.getElementById("adminFooterContact3");
-      const adminFooterContact4El = document.getElementById("adminFooterContact4");
-      const adminBottomLeftEl = document.getElementById("adminBottomLeft");
-      const adminBottomRightLabelEl = document.getElementById("adminBottomRightLabel");
-      const adminBottomRightUrlEl = document.getElementById("adminBottomRightUrl");
-
-      // App state
-      let siteData = loadSiteData();
 
       // =============================
-      // Rendering helpers
+      // Render site content from data
       // =============================
       function renderSiteFromData() {
-        heroBadgeEl.textContent = siteData.content.heroBadge;
-        heroHeadingEl.textContent = siteData.content.heroHeading;
-        heroSubtextEl.textContent = siteData.content.heroSubtext;
-        heroBtnInvolvedEl.textContent = siteData.content.heroBtnInvolved;
-        heroBtnImpactEl.textContent = siteData.content.heroBtnImpact;
-        whyHeadingEl.textContent = siteData.content.whyHeading;
-        whyTextEl.textContent = siteData.content.whyText;
-        whyBullet1El.textContent = siteData.content.whyBullet1;
-        whyBullet2El.textContent = siteData.content.whyBullet2;
-        whyBullet3El.textContent = siteData.content.whyBullet3;
-        missionHeadingEl.textContent = siteData.content.missionHeading;
-        missionSubtextEl.textContent = siteData.content.missionSubtext;
-        missionCard1TitleEl.textContent = siteData.content.missionCard1Title;
-        missionCard1TextEl.textContent = siteData.content.missionCard1Text;
-        missionCard2TitleEl.textContent = siteData.content.missionCard2Title;
-        missionCard2TextEl.textContent = siteData.content.missionCard2Text;
-        missionCard3TitleEl.textContent = siteData.content.missionCard3Title;
-        missionCard3TextEl.textContent = siteData.content.missionCard3Text;
-        impactHeadingEl.textContent = siteData.content.impactHeading;
-        impactSubtextEl.textContent = siteData.content.impactSubtext;
-        statLbsLabelEl.textContent = siteData.content.statLbsLabel;
-        statLaptopsLabelEl.textContent = siteData.content.statLaptopsLabel;
-        statFreeLabelEl.textContent = siteData.content.statFreeLabel;
-        programsHeadingEl.textContent = siteData.content.programsHeading;
-        programsSubtextEl.textContent = siteData.content.programsSubtext;
-        program1TitleEl.textContent = siteData.content.program1Title;
-        program1TextEl.textContent = siteData.content.program1Text;
-        program2TitleEl.textContent = siteData.content.program2Title;
-        program2TextEl.textContent = siteData.content.program2Text;
-        program3TitleEl.textContent = siteData.content.program3Title;
-        program3TextEl.textContent = siteData.content.program3Text;
-        contactHeadingEl.textContent = siteData.content.contactHeading;
-        contactSubtextEl.textContent = siteData.content.contactSubtext;
+        document.getElementById("heroBadge").textContent = siteData.content.heroBadge;
+        document.getElementById("heroHeading").textContent = siteData.content.heroHeading;
+        document.getElementById("heroSubtext").textContent = siteData.content.heroSubtext;
+        document.getElementById("heroBtnInvolved").textContent = siteData.content.heroBtnInvolved;
+        document.getElementById("heroBtnImpact").textContent = siteData.content.heroBtnImpact;
+        document.getElementById("whyHeading").textContent = siteData.content.whyHeading;
+        document.getElementById("whyText").textContent = siteData.content.whyText;
+        document.getElementById("whyBullet1").textContent = siteData.content.whyBullet1;
+        document.getElementById("whyBullet2").textContent = siteData.content.whyBullet2;
+        document.getElementById("whyBullet3").textContent = siteData.content.whyBullet3;
+        document.getElementById("missionHeading").textContent = siteData.content.missionHeading;
+        document.getElementById("missionSubtext").textContent = siteData.content.missionSubtext;
+        document.getElementById("missionCard1Title").textContent = siteData.content.missionCard1Title;
+        document.getElementById("missionCard1Text").textContent = siteData.content.missionCard1Text;
+        document.getElementById("missionCard2Title").textContent = siteData.content.missionCard2Title;
+        document.getElementById("missionCard2Text").textContent = siteData.content.missionCard2Text;
+        document.getElementById("missionCard3Title").textContent = siteData.content.missionCard3Title;
+        document.getElementById("missionCard3Text").textContent = siteData.content.missionCard3Text;
+        document.getElementById("impactHeading").textContent = siteData.content.impactHeading;
+        document.getElementById("impactSubtext").textContent = siteData.content.impactSubtext;
+        document.getElementById("statLbsLabel").textContent = siteData.content.statLbsLabel;
+        document.getElementById("statLaptopsLabel").textContent = siteData.content.statLaptopsLabel;
+        document.getElementById("statFreeLabel").textContent = siteData.content.statFreeLabel;
+        document.getElementById("programsHeading").textContent = siteData.content.programsHeading;
+        document.getElementById("programsSubtext").textContent = siteData.content.programsSubtext;
+        document.getElementById("program1Title").textContent = siteData.content.program1Title;
+        document.getElementById("program1Text").textContent = siteData.content.program1Text;
+        document.getElementById("program2Title").textContent = siteData.content.program2Title;
+        document.getElementById("program2Text").textContent = siteData.content.program2Text;
+        document.getElementById("program3Title").textContent = siteData.content.program3Title;
+        document.getElementById("program3Text").textContent = siteData.content.program3Text;
+        document.getElementById("contactHeading").textContent = siteData.content.contactHeading;
+        document.getElementById("contactSubtext").textContent = siteData.content.contactSubtext;
 
-        statLbsValueEl.textContent = formatPlus(siteData.stats.lbsDiverted);
-        statLaptopsValueEl.textContent = formatPlus(siteData.stats.laptopsDeployed);
-        statFreeValueEl.textContent = formatPercent(siteData.stats.freeServicePercent);
+        document.getElementById("statLbsValue").textContent = formatPlus(siteData.stats.lbsDiverted);
+        document.getElementById("statLaptopsValue").textContent = formatPlus(siteData.stats.laptopsDeployed);
+        document.getElementById("statFreeValue").textContent = formatPercent(siteData.stats.freeServicePercent);
 
-        navHomeEl.textContent = siteData.nav.home;
-        navMissionEl.textContent = siteData.nav.mission;
-        navImpactEl.textContent = siteData.nav.impact;
-        navProgramsEl.textContent = siteData.nav.programs;
-        navContactEl.textContent = siteData.nav.contact;
+        document.getElementById("navHome").textContent = siteData.nav.home;
+        document.getElementById("navMission").textContent = siteData.nav.mission;
+        document.getElementById("navImpact").textContent = siteData.nav.impact;
+        document.getElementById("navPrograms").textContent = siteData.nav.programs;
+        document.getElementById("navContact").textContent = siteData.nav.contact;
 
-        footerBrandHeadingEl.textContent = siteData.footer.brandHeading;
-        footerBrandTextEl.textContent = siteData.footer.brandText;
-        footerQuickLinksHeadingEl.textContent = siteData.footer.quickLinksHeading;
-        footerProgramsHeadingEl.textContent = siteData.footer.programsHeading;
-        footerContactHeadingEl.textContent = siteData.footer.contactHeading;
+        document.getElementById("footerBrandHeading").textContent = siteData.footer.brandHeading;
+        document.getElementById("footerBrandText").textContent = siteData.footer.brandText;
+        document.getElementById("footerQuickLinksHeading").textContent = siteData.footer.quickLinksHeading;
+        document.getElementById("footerProgramsHeading").textContent = siteData.footer.programsHeading;
+        document.getElementById("footerContactHeading").textContent = siteData.footer.contactHeading;
 
         if (siteData.footer.quickLinks.length >= 4) {
-          footerQuickLink1El.textContent = siteData.footer.quickLinks[0].label;
-          footerQuickLink1El.setAttribute("href", siteData.footer.quickLinks[0].url);
-          footerQuickLink2El.textContent = siteData.footer.quickLinks[1].label;
-          footerQuickLink2El.setAttribute("href", siteData.footer.quickLinks[1].url);
-          footerQuickLink3El.textContent = siteData.footer.quickLinks[2].label;
-          footerQuickLink3El.setAttribute("href", siteData.footer.quickLinks[2].url);
-          footerQuickLink4El.textContent = siteData.footer.quickLinks[3].label;
-          footerQuickLink4El.setAttribute("href", siteData.footer.quickLinks[3].url);
+          document.getElementById("footerQuickLink1").textContent = siteData.footer.quickLinks[0].label;
+          document.getElementById("footerQuickLink1").setAttribute("href", siteData.footer.quickLinks[0].url);
+          document.getElementById("footerQuickLink2").textContent = siteData.footer.quickLinks[1].label;
+          document.getElementById("footerQuickLink2").setAttribute("href", siteData.footer.quickLinks[1].url);
+          document.getElementById("footerQuickLink3").textContent = siteData.footer.quickLinks[2].label;
+          document.getElementById("footerQuickLink3").setAttribute("href", siteData.footer.quickLinks[2].url);
+          document.getElementById("footerQuickLink4").textContent = siteData.footer.quickLinks[3].label;
+          document.getElementById("footerQuickLink4").setAttribute("href", siteData.footer.quickLinks[3].url);
         }
-
         if (siteData.footer.programs.length >= 4) {
-          footerProgram1El.textContent = siteData.footer.programs[0];
-          footerProgram2El.textContent = siteData.footer.programs[1];
-          footerProgram3El.textContent = siteData.footer.programs[2];
-          footerProgram4El.textContent = siteData.footer.programs[3];
+          document.getElementById("footerProgram1").textContent = siteData.footer.programs[0];
+          document.getElementById("footerProgram2").textContent = siteData.footer.programs[1];
+          document.getElementById("footerProgram3").textContent = siteData.footer.programs[2];
+          document.getElementById("footerProgram4").textContent = siteData.footer.programs[3];
         }
-
         if (siteData.footer.contact.length >= 4) {
-          footerContact1El.textContent = siteData.footer.contact[0];
-          footerContact2El.textContent = siteData.footer.contact[1];
-          footerContact3El.textContent = siteData.footer.contact[2];
-          footerContact4El.textContent = siteData.footer.contact[3];
+          document.getElementById("footerContact1").textContent = siteData.footer.contact[0];
+          document.getElementById("footerContact2").textContent = siteData.footer.contact[1];
+          document.getElementById("footerContact3").textContent = siteData.footer.contact[2];
+          document.getElementById("footerContact4").textContent = siteData.footer.contact[3];
         }
 
-        bottomBarLeftTextEl.textContent = siteData.bottomBar.leftText;
-        bottomBarRightLinkEl.textContent = siteData.bottomBar.rightLabel;
-        bottomBarRightLinkEl.setAttribute("href", siteData.bottomBar.rightUrl || "#");
+        document.getElementById("bottomBarLeftText").textContent = siteData.bottomBar.leftText;
+        document.getElementById("bottomBarRightLink").textContent = siteData.bottomBar.rightLabel;
+        document.getElementById("bottomBarRightLink").setAttribute("href", siteData.bottomBar.rightUrl || "#");
       }
 
-      function renderAdminFields() {
-        adminStatLbsEl.value = siteData.stats.lbsDiverted;
-        adminStatLaptopsEl.value = siteData.stats.laptopsDeployed;
-        adminStatFreeEl.value = siteData.stats.freeServicePercent;
-        adminStatLbsLabelEl.value = siteData.content.statLbsLabel;
-        adminStatLaptopsLabelEl.value = siteData.content.statLaptopsLabel;
-        adminStatFreeLabelEl.value = siteData.content.statFreeLabel;
-        adminHeroBadgeEl.value = siteData.content.heroBadge;
-        adminHeroHeadingEl.value = siteData.content.heroHeading;
-        adminHeroSubtextEl.value = siteData.content.heroSubtext;
-        adminHeroBtnInvolvedEl.value = siteData.content.heroBtnInvolved;
-        adminHeroBtnImpactEl.value = siteData.content.heroBtnImpact;
-        adminWhyHeadingEl.value = siteData.content.whyHeading;
-        adminWhyTextEl.value = siteData.content.whyText;
-        adminWhyBullet1El.value = siteData.content.whyBullet1;
-        adminWhyBullet2El.value = siteData.content.whyBullet2;
-        adminWhyBullet3El.value = siteData.content.whyBullet3;
-        adminMissionHeadingEl.value = siteData.content.missionHeading;
-        adminMissionSubtextEl.value = siteData.content.missionSubtext;
-        adminMissionCard1TitleEl.value = siteData.content.missionCard1Title;
-        adminMissionCard1TextEl.value = siteData.content.missionCard1Text;
-        adminMissionCard2TitleEl.value = siteData.content.missionCard2Title;
-        adminMissionCard2TextEl.value = siteData.content.missionCard2Text;
-        adminMissionCard3TitleEl.value = siteData.content.missionCard3Title;
-        adminMissionCard3TextEl.value = siteData.content.missionCard3Text;
-        adminImpactHeadingEl.value = siteData.content.impactHeading;
-        adminImpactSubtextEl.value = siteData.content.impactSubtext;
-        adminProgramsHeadingEl.value = siteData.content.programsHeading;
-        adminProgramsSubtextEl.value = siteData.content.programsSubtext;
-        adminProgram1TitleEl.value = siteData.content.program1Title;
-        adminProgram1TextEl.value = siteData.content.program1Text;
-        adminProgram2TitleEl.value = siteData.content.program2Title;
-        adminProgram2TextEl.value = siteData.content.program2Text;
-        adminProgram3TitleEl.value = siteData.content.program3Title;
-        adminProgram3TextEl.value = siteData.content.program3Text;
-        adminContactHeadingEl.value = siteData.content.contactHeading;
-        adminContactSubtextEl.value = siteData.content.contactSubtext;
-        adminNavHomeEl.value = siteData.nav.home;
-        adminNavMissionEl.value = siteData.nav.mission;
-        adminNavImpactEl.value = siteData.nav.impact;
-        adminNavProgramsEl.value = siteData.nav.programs;
-        adminNavContactEl.value = siteData.nav.contact;
-        adminFooterBrandHeadingEl.value = siteData.footer.brandHeading;
-        adminFooterBrandTextEl.value = siteData.footer.brandText;
-        adminFooterQuickLinksHeadingEl.value = siteData.footer.quickLinksHeading;
-        adminFooterQuickLink1LabelEl.value = siteData.footer.quickLinks[0].label;
-        adminFooterQuickLink1UrlEl.value = siteData.footer.quickLinks[0].url;
-        adminFooterQuickLink2LabelEl.value = siteData.footer.quickLinks[1].label;
-        adminFooterQuickLink2UrlEl.value = siteData.footer.quickLinks[1].url;
-        adminFooterQuickLink3LabelEl.value = siteData.footer.quickLinks[2].label;
-        adminFooterQuickLink3UrlEl.value = siteData.footer.quickLinks[2].url;
-        adminFooterQuickLink4LabelEl.value = siteData.footer.quickLinks[3].label;
-        adminFooterQuickLink4UrlEl.value = siteData.footer.quickLinks[3].url;
-        adminFooterProgramsHeadingEl.value = siteData.footer.programsHeading;
-        adminFooterProgram1El.value = siteData.footer.programs[0];
-        adminFooterProgram2El.value = siteData.footer.programs[1];
-        adminFooterProgram3El.value = siteData.footer.programs[2];
-        adminFooterProgram4El.value = siteData.footer.programs[3];
-        adminFooterContactHeadingEl.value = siteData.footer.contactHeading;
-        adminFooterContact1El.value = siteData.footer.contact[0];
-        adminFooterContact2El.value = siteData.footer.contact[1];
-        adminFooterContact3El.value = siteData.footer.contact[2];
-        adminFooterContact4El.value = siteData.footer.contact[3];
-        adminBottomLeftEl.value = siteData.bottomBar.leftText;
-        adminBottomRightLabelEl.value = siteData.bottomBar.rightLabel;
-        adminBottomRightUrlEl.value = siteData.bottomBar.rightUrl;
-      }
-
-      function renderMessagesTable() {
-        adminMessagesBody.innerHTML = "";
-        if (siteData.messages.length === 0) {
-          const row = document.createElement("tr");
-          row.innerHTML = `<td colspan="6" class="px-3 py-3 text-theme-textMuted dark:text-theme-darkTextMuted">No messages yet.</td>`;
-          adminMessagesBody.appendChild(row);
-          return;
-        }
-
-        siteData.messages.forEach((msg, idx) => {
-          const row = document.createElement("tr");
-          row.className = "border-t border-theme-border dark:border-theme-darkBorder";
-          row.innerHTML = `
-            <td class="px-3 py-2 align-top">${msg.date}</td>
-            <td class="px-3 py-2 align-top">${msg.name}</td>
-            <td class="px-3 py-2 align-top">${msg.email}</td>
-            <td class="px-3 py-2 align-top">${msg.role}</td>
-            <td class="px-3 py-2 align-top">${msg.message}</td>
-            <td class="px-3 py-2 align-top">
-              <button data-msg-idx="${idx}" class="mark-read-btn rounded bg-theme-lightGrey px-2 py-1 text-xs dark:bg-theme-charcoal">
-                ${msg.status}
-              </button>
-            </td>
-          `;
-          adminMessagesBody.appendChild(row);
-        });
-      }
-
-      function syncAdminButtonVisibility() {
+      // =============================
+      // Sync admin access button visibility
+      // Only visible when an admin session is active (max security)
+      // =============================
+      function syncAdminAccessVisibility() {
         if (isAdminAuthed()) {
-          adminPanelBtn.classList.remove("hidden");
+          adminAccessBtn.classList.remove("hidden");
         } else {
-          adminPanelBtn.classList.add("hidden");
+          adminAccessBtn.classList.add("hidden");
         }
       }
 
@@ -1305,38 +676,20 @@ function saveSiteData() {
       function setActiveAuthTab(tab) {
         loginForm.classList.toggle("hidden", tab !== "login");
         signupForm.classList.toggle("hidden", tab !== "signup");
-        adminLoginForm.classList.toggle("hidden", tab !== "admin");
 
         const activeClass = "rounded-md bg-theme-dustyBlue px-3 py-2 text-sm font-semibold text-theme-text dark:bg-theme-darkDustyBlue dark:text-theme-darkText";
         const inactiveClass = "rounded-md bg-theme-lightGrey px-3 py-2 text-sm font-semibold text-theme-textSecondary dark:bg-theme-charcoal dark:text-theme-darkTextSecondary";
         loginTabBtn.className = tab === "login" ? activeClass : inactiveClass;
         signupTabBtn.className = tab === "signup" ? activeClass : inactiveClass;
-        adminTabBtn.className = tab === "admin" ? activeClass : inactiveClass;
       }
 
       function openAuthModal() {
-        adminLoginError.classList.add("hidden");
         authModal.classList.remove("hidden");
         authModal.classList.add("flex");
       }
-
       function closeAuth() {
         authModal.classList.add("hidden");
         authModal.classList.remove("flex");
-      }
-
-      // =============================
-      // Admin panel modal
-      // =============================
-      function openAdminPanel() {
-        renderAdminFields();
-        renderMessagesTable();
-        adminSaveStatus.textContent = "";
-        adminPanelModal.classList.remove("hidden");
-      }
-
-      function closeAdminPanel() {
-        adminPanelModal.classList.add("hidden");
       }
 
       // =============================
@@ -1356,7 +709,6 @@ function saveSiteData() {
       closeAuthModal.addEventListener("click", closeAuth);
       loginTabBtn.addEventListener("click", () => setActiveAuthTab("login"));
       signupTabBtn.addEventListener("click", () => setActiveAuthTab("signup"));
-      adminTabBtn.addEventListener("click", () => setActiveAuthTab("admin"));
 
       authModal.addEventListener("click", (event) => {
         if (event.target === authModal) closeAuth();
@@ -1389,23 +741,6 @@ function saveSiteData() {
         setActiveAuthTab("login");
       });
 
-      adminLoginForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const username = document.getElementById("adminUsername").value.trim();
-        const password = document.getElementById("adminPassword").value;
-
-        if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-          setAdminAuth(true);
-          syncAdminButtonVisibility();
-          adminLoginForm.reset();
-          closeAuth();
-          openAdminPanel();
-          return;
-        }
-
-        adminLoginError.classList.remove("hidden");
-      });
-
       // =============================
       // Contact form + message store
       // =============================
@@ -1420,139 +755,11 @@ function saveSiteData() {
           message: String(formData.get("message") || "").trim(),
           status: "New",
         };
-siteData.messages.unshift(entry);
-        saveSiteData();
-        saveToWorker();
+        const requests = JSON.parse(localStorage.getItem("cr-requests") || "[]");
+        requests.unshift(entry);
+        localStorage.setItem("cr-requests", JSON.stringify(requests));
         alert("Thank you. Your message has been received.");
         contactForm.reset();
-      });
-
-      // =============================
-      // Admin panel actions
-      // =============================
-      adminPanelBtn.addEventListener("click", openAdminPanel);
-      closeAdminPanelBtn.addEventListener("click", closeAdminPanel);
-
-      adminLogoutBtn.addEventListener("click", () => {
-        setAdminAuth(false);
-        syncAdminButtonVisibility();
-        closeAdminPanel();
-        alert("Admin session logged out.");
-      });
-
-      saveAdminChangesBtn.addEventListener("click", () => {
-        const lbs = Number(adminStatLbsEl.value);
-        const laptops = Number(adminStatLaptopsEl.value);
-        const free = Number(adminStatFreeEl.value);
-
-        if (Number.isNaN(lbs) || Number.isNaN(laptops) || Number.isNaN(free)) {
-          adminSaveStatus.textContent = "Please enter valid numeric stats.";
-          return;
-        }
-
-        siteData.stats.lbsDiverted = Math.max(0, lbs);
-        siteData.stats.laptopsDeployed = Math.max(0, laptops);
-        siteData.stats.freeServicePercent = Math.min(100, Math.max(0, free));
-
-        siteData.content.heroBadge = adminHeroBadgeEl.value.trim() || defaultSiteData.content.heroBadge;
-        siteData.content.heroHeading = adminHeroHeadingEl.value.trim() || defaultSiteData.content.heroHeading;
-        siteData.content.heroSubtext = adminHeroSubtextEl.value.trim() || defaultSiteData.content.heroSubtext;
-        siteData.content.heroBtnInvolved = adminHeroBtnInvolvedEl.value.trim() || defaultSiteData.content.heroBtnInvolved;
-        siteData.content.heroBtnImpact = adminHeroBtnImpactEl.value.trim() || defaultSiteData.content.heroBtnImpact;
-        siteData.content.whyHeading = adminWhyHeadingEl.value.trim() || defaultSiteData.content.whyHeading;
-        siteData.content.whyText = adminWhyTextEl.value.trim() || defaultSiteData.content.whyText;
-        siteData.content.whyBullet1 = adminWhyBullet1El.value.trim() || defaultSiteData.content.whyBullet1;
-        siteData.content.whyBullet2 = adminWhyBullet2El.value.trim() || defaultSiteData.content.whyBullet2;
-        siteData.content.whyBullet3 = adminWhyBullet3El.value.trim() || defaultSiteData.content.whyBullet3;
-        siteData.content.missionHeading = adminMissionHeadingEl.value.trim() || defaultSiteData.content.missionHeading;
-        siteData.content.missionSubtext = adminMissionSubtextEl.value.trim() || defaultSiteData.content.missionSubtext;
-        siteData.content.missionCard1Title = adminMissionCard1TitleEl.value.trim() || defaultSiteData.content.missionCard1Title;
-        siteData.content.missionCard1Text = adminMissionCard1TextEl.value.trim() || defaultSiteData.content.missionCard1Text;
-        siteData.content.missionCard2Title = adminMissionCard2TitleEl.value.trim() || defaultSiteData.content.missionCard2Title;
-        siteData.content.missionCard2Text = adminMissionCard2TextEl.value.trim() || defaultSiteData.content.missionCard2Text;
-        siteData.content.missionCard3Title = adminMissionCard3TitleEl.value.trim() || defaultSiteData.content.missionCard3Title;
-        siteData.content.missionCard3Text = adminMissionCard3TextEl.value.trim() || defaultSiteData.content.missionCard3Text;
-        siteData.content.impactHeading = adminImpactHeadingEl.value.trim() || defaultSiteData.content.impactHeading;
-        siteData.content.impactSubtext = adminImpactSubtextEl.value.trim() || defaultSiteData.content.impactSubtext;
-        siteData.content.statLbsLabel = adminStatLbsLabelEl.value.trim() || defaultSiteData.content.statLbsLabel;
-        siteData.content.statLaptopsLabel = adminStatLaptopsLabelEl.value.trim() || defaultSiteData.content.statLaptopsLabel;
-        siteData.content.statFreeLabel = adminStatFreeLabelEl.value.trim() || defaultSiteData.content.statFreeLabel;
-        siteData.content.programsHeading = adminProgramsHeadingEl.value.trim() || defaultSiteData.content.programsHeading;
-        siteData.content.programsSubtext = adminProgramsSubtextEl.value.trim() || defaultSiteData.content.programsSubtext;
-        siteData.content.program1Title = adminProgram1TitleEl.value.trim() || defaultSiteData.content.program1Title;
-        siteData.content.program1Text = adminProgram1TextEl.value.trim() || defaultSiteData.content.program1Text;
-        siteData.content.program2Title = adminProgram2TitleEl.value.trim() || defaultSiteData.content.program2Title;
-        siteData.content.program2Text = adminProgram2TextEl.value.trim() || defaultSiteData.content.program2Text;
-        siteData.content.program3Title = adminProgram3TitleEl.value.trim() || defaultSiteData.content.program3Title;
-        siteData.content.program3Text = adminProgram3TextEl.value.trim() || defaultSiteData.content.program3Text;
-        siteData.content.contactHeading = adminContactHeadingEl.value.trim() || defaultSiteData.content.contactHeading;
-        siteData.content.contactSubtext = adminContactSubtextEl.value.trim() || defaultSiteData.content.contactSubtext;
-
-        siteData.nav.home = adminNavHomeEl.value.trim() || defaultSiteData.nav.home;
-        siteData.nav.mission = adminNavMissionEl.value.trim() || defaultSiteData.nav.mission;
-        siteData.nav.impact = adminNavImpactEl.value.trim() || defaultSiteData.nav.impact;
-        siteData.nav.programs = adminNavProgramsEl.value.trim() || defaultSiteData.nav.programs;
-        siteData.nav.contact = adminNavContactEl.value.trim() || defaultSiteData.nav.contact;
-
-        siteData.footer.brandHeading = adminFooterBrandHeadingEl.value.trim() || defaultSiteData.footer.brandHeading;
-        siteData.footer.brandText = adminFooterBrandTextEl.value.trim() || defaultSiteData.footer.brandText;
-        siteData.footer.quickLinksHeading = adminFooterQuickLinksHeadingEl.value.trim() || defaultSiteData.footer.quickLinksHeading;
-        siteData.footer.quickLinks = [
-          { label: adminFooterQuickLink1LabelEl.value.trim() || defaultSiteData.footer.quickLinks[0].label, url: adminFooterQuickLink1UrlEl.value.trim() || "#" },
-          { label: adminFooterQuickLink2LabelEl.value.trim() || defaultSiteData.footer.quickLinks[1].label, url: adminFooterQuickLink2UrlEl.value.trim() || "#" },
-          { label: adminFooterQuickLink3LabelEl.value.trim() || defaultSiteData.footer.quickLinks[2].label, url: adminFooterQuickLink3UrlEl.value.trim() || "#" },
-          { label: adminFooterQuickLink4LabelEl.value.trim() || defaultSiteData.footer.quickLinks[3].label, url: adminFooterQuickLink4UrlEl.value.trim() || "#" },
-        ];
-        siteData.footer.programsHeading = adminFooterProgramsHeadingEl.value.trim() || defaultSiteData.footer.programsHeading;
-        siteData.footer.programs = [
-          adminFooterProgram1El.value.trim() || defaultSiteData.footer.programs[0],
-          adminFooterProgram2El.value.trim() || defaultSiteData.footer.programs[1],
-          adminFooterProgram3El.value.trim() || defaultSiteData.footer.programs[2],
-          adminFooterProgram4El.value.trim() || defaultSiteData.footer.programs[3],
-        ];
-        siteData.footer.contactHeading = adminFooterContactHeadingEl.value.trim() || defaultSiteData.footer.contactHeading;
-        siteData.footer.contact = [
-          adminFooterContact1El.value.trim() || defaultSiteData.footer.contact[0],
-          adminFooterContact2El.value.trim() || defaultSiteData.footer.contact[1],
-          adminFooterContact3El.value.trim() || defaultSiteData.footer.contact[2],
-          adminFooterContact4El.value.trim() || defaultSiteData.footer.contact[3],
-        ];
-
-        siteData.bottomBar.leftText = adminBottomLeftEl.value.trim() || defaultSiteData.bottomBar.leftText;
-        siteData.bottomBar.rightLabel = adminBottomRightLabelEl.value.trim() || defaultSiteData.bottomBar.rightLabel;
-        siteData.bottomBar.rightUrl = adminBottomRightUrlEl.value.trim() || "#";
-
-saveSiteData();
-        renderSiteFromData();
-        adminSaveStatus.textContent = "Changes saved successfully.";
-        saveToWorker().then((ok) => {
-          if (!ok) adminSaveStatus.textContent = "Saved locally. Cloud sync unavailable.";
-        });
-      });
-
-      adminMessagesBody.addEventListener("click", (event) => {
-        const target = event.target;
-        if (!target.classList.contains("mark-read-btn")) return;
-        const idx = Number(target.getAttribute("data-msg-idx"));
-        if (Number.isNaN(idx) || !siteData.messages[idx]) return;
-siteData.messages[idx].status = siteData.messages[idx].status === "Read" ? "New" : "Read";
-        saveSiteData();
-        saveToWorker();
-        renderMessagesTable();
-      });
-
-      exportMessagesBtn.addEventListener("click", () => {
-        const header = ["Date", "Name", "Email", "Role", "Message", "Status"];
-        const rows = siteData.messages.map((m) => [m.date, m.name, m.email, m.role, m.message, m.status]);
-        const lines = [header, ...rows].map((line) => line.map((value) => `"${String(value).replace(/"/g, '""')}"`).join(","));
-        const csv = lines.join("\n");
-        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "contact-messages.csv";
-        link.click();
-        URL.revokeObjectURL(url);
       });
 
       // =============================
@@ -1572,10 +779,9 @@ siteData.messages[idx].status = siteData.messages[idx].status === "Read" ? "New"
       // =============================
       // Initial app setup
       // =============================
-renderSiteFromData();
-      syncAdminButtonVisibility();
+      renderSiteFromData();
+      syncAdminAccessVisibility();
       setActiveAuthTab("login");
-      loadFromWorker();
     </script>
   </body>
 </html>
