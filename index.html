@@ -721,7 +721,7 @@
     </div>
 
     <script>
-      // =============================
+// =============================
       // App constants
       // =============================
       const THEME_KEY = "circuitrelay-theme";
@@ -729,6 +729,16 @@
       const ADMIN_AUTH_KEY = "circuitrelay-admin-auth";
       const ADMIN_USERNAME = "Addy";
       const ADMIN_PASSWORD = "Addy@1234";
+
+      // =============================
+      // Global sync config (Cloudflare Worker)
+      // The Worker securely reads/writes the GitHub site-data.json.
+      // No tokens are stored in this file.
+      // =============================
+      const WORKER_URL = "https://YOUR-WORKER.workers.dev"; // <-- REPLACE with your Worker URL
+      // The admin key is shared with the Worker to authorize writes.
+      // It is NOT a GitHub token; it only protects the Worker endpoint.
+      const ADMIN_SYNC_KEY = "YOUR_RANDOM_ADMIN_KEY"; // <-- REPLACE with a long random string
 
       // =============================
       // Default editable site data
@@ -828,8 +838,53 @@
         }
       }
 
-      function saveSiteData() {
+function saveSiteData() {
         localStorage.setItem(DATA_KEY, JSON.stringify(siteData));
+      }
+
+      // =============================
+      // Global sync via Cloudflare Worker
+      // =============================
+      async function loadFromWorker() {
+        try {
+          const res = await fetch(WORKER_URL, { method: "GET", cache: "no-store" });
+          if (!res.ok) return false;
+          const text = await res.text();
+          const parsed = JSON.parse(text);
+          if (!parsed || typeof parsed !== "object") return false;
+          const merged = JSON.parse(JSON.stringify(defaultSiteData));
+          merged.stats = { ...merged.stats, ...(parsed.stats || {}) };
+          merged.content = { ...merged.content, ...(parsed.content || {}) };
+          merged.nav = { ...merged.nav, ...(parsed.nav || {}) };
+          merged.footer = { ...merged.footer, ...(parsed.footer || {}) };
+          if (parsed.footer && Array.isArray(parsed.footer.quickLinks)) merged.footer.quickLinks = parsed.footer.quickLinks;
+          if (parsed.footer && Array.isArray(parsed.footer.programs)) merged.footer.programs = parsed.footer.programs;
+          if (parsed.footer && Array.isArray(parsed.footer.contact)) merged.footer.contact = parsed.footer.contact;
+          merged.bottomBar = { ...merged.bottomBar, ...(parsed.bottomBar || {}) };
+          merged.messages = Array.isArray(parsed.messages) ? parsed.messages : [];
+          siteData = merged;
+          saveSiteData();
+          renderSiteFromData();
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
+      async function saveToWorker() {
+        try {
+          const res = await fetch(WORKER_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-admin-key": ADMIN_SYNC_KEY,
+            },
+            body: JSON.stringify({ data: siteData }),
+          });
+          return res.ok;
+        } catch {
+          return false;
+        }
       }
 
       function setAdminAuth(isAuthed) {
@@ -1333,8 +1388,9 @@
           message: String(formData.get("message") || "").trim(),
           status: "New",
         };
-        siteData.messages.unshift(entry);
+siteData.messages.unshift(entry);
         saveSiteData();
+        saveToWorker();
         alert("Thank you. Your message has been received.");
         contactForm.reset();
       });
@@ -1434,9 +1490,12 @@
         siteData.bottomBar.rightLabel = adminBottomRightLabelEl.value.trim() || defaultSiteData.bottomBar.rightLabel;
         siteData.bottomBar.rightUrl = adminBottomRightUrlEl.value.trim() || "#";
 
-        saveSiteData();
+saveSiteData();
         renderSiteFromData();
         adminSaveStatus.textContent = "Changes saved successfully.";
+        saveToWorker().then((ok) => {
+          if (!ok) adminSaveStatus.textContent = "Saved locally. Cloud sync unavailable.";
+        });
       });
 
       adminMessagesBody.addEventListener("click", (event) => {
@@ -1444,8 +1503,9 @@
         if (!target.classList.contains("mark-read-btn")) return;
         const idx = Number(target.getAttribute("data-msg-idx"));
         if (Number.isNaN(idx) || !siteData.messages[idx]) return;
-        siteData.messages[idx].status = siteData.messages[idx].status === "Read" ? "New" : "Read";
+siteData.messages[idx].status = siteData.messages[idx].status === "Read" ? "New" : "Read";
         saveSiteData();
+        saveToWorker();
         renderMessagesTable();
       });
 
@@ -1480,9 +1540,10 @@
       // =============================
       // Initial app setup
       // =============================
-      renderSiteFromData();
+renderSiteFromData();
       syncAdminButtonVisibility();
       setActiveAuthTab("login");
+      loadFromWorker();
     </script>
   </body>
 </html>
