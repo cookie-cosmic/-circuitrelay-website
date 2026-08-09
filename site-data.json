@@ -51,10 +51,22 @@
     "brandText": "Connecting communities with technology access through sustainable engineering workflows.",
     "quickLinksHeading": "Quick Links",
     "quickLinks": [
-      { "label": "Home", "url": "#home" },
-      { "label": "About Us", "url": "#mission" },
-      { "label": "Impact", "url": "#impact" },
-      { "label": "Contact", "url": "#contact" }
+      {
+        "label": "Home",
+        "url": "#home"
+      },
+      {
+        "label": "About Us",
+        "url": "#mission"
+      },
+      {
+        "label": "Impact",
+        "url": "#impact"
+      },
+      {
+        "label": "Contact",
+        "url": "#contact"
+      }
     ],
     "programsHeading": "Programs",
     "programs": [
