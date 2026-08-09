@@ -6,4 +6,5 @@ PAT_token
 node_modules/
 .wrangler/
 deploy_output.txt
+deploy_dir/
 
