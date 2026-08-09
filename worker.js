@@ -149,6 +149,12 @@ export default {
     // Provide env vars to the configuration helpers
     Object.assign(globalThis, env);
 
+    // Resolve the GitHub PAT from whichever secret name was configured
+    // (GITHUB_TOKEN or PFP_Token) so the helpers below always see GITHUB_TOKEN.
+    if (typeof globalThis.GITHUB_TOKEN === "undefined" && typeof globalThis.PFP_Token !== "undefined") {
+      globalThis.GITHUB_TOKEN = globalThis.PFP_Token;
+    }
+
     const url = new URL(request.url);
     const ip = request.headers.get("CF-Connecting-IP") || "unknown";
 

@@ -23,6 +23,30 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Fail fast with a clear message if required Cloudflare secrets are missing.
+      # Without CLOUDFLARE_API_TOKEN, wrangler cannot deploy in non-interactive (CI) mode.
+      - name: Verify Cloudflare secrets are configured
+        shell: bash
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN secret is not set. Add it at:"
+            echo "::error::  GitHub repo -> Settings -> Secrets and variables -> Actions"
+            echo "::error::Create it in Cloudflare (My Profile -> API Tokens -> Create Token)"
+            echo "::error::   permission: Account -> Cloudflare Pages -> Edit"
+            echo "::error::   resource: your account or specific account"
+            exit 1
+          fi
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::error::CLOUDFLARE_ACCOUNT_ID secret is not set. Add it at:"
+            echo "::error::  GitHub repo -> Settings -> Secrets and variables -> Actions"
+            echo "::error::Find it in Cloudflare -> right sidebar of your domain overview page."
+            exit 1
+          fi
+          echo "Cloudflare credentials present. Proceeding to deploy."
+
       - name: Deploy static site to Cloudflare Pages
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
