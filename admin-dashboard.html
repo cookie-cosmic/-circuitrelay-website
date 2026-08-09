@@ -529,9 +529,10 @@
             <label class="mb-2 block text-sm text-sub dark:text-darkSub">Donor Source</label>
             <input id="aDonor" type="text" required placeholder="TechCorp LLC" class="w-full rounded-md border border-black/10 bg-cream px-3 py-2 outline-none focus:ring-2 focus:ring-accentLight dark:border-white/10 dark:bg-darkBg dark:focus:ring-darkAccent" />
           </div>
-          <div>
-            <label class="mb-2 block text-sm text-sub dark:text-darkSub">Serial Number</label>
-            <input id="aSerial" type="text" required placeholder="SN123456789" class="w-full rounded-md border border-black/10 bg-cream px-3 py-2 outline-none focus:ring-2 focus:ring-accentLight dark:border-white/10 dark:bg-darkBg dark:focus:ring-darkAccent" />
+<div>
+            <label class="mb-2 block text-sm text-sub dark:text-darkSub">System Serial Number (auto-generated)</label>
+            <input id="aSerial" type="text" required readonly placeholder="CR-GENR-260808-001" class="w-full rounded-md border border-dashed border-black/20 bg-black/5 px-3 py-2 font-mono text-sm text-sub outline-none dark:border-white/20 dark:bg-white/5 dark:text-darkSub" />
+            <p class="mt-1 text-xs text-sub dark:text-darkSub">Format: CR-[BRAND]-[YYMMDD]-[SEQUENCE]</p>
           </div>
           <div>
             <label class="mb-2 block text-sm text-sub dark:text-darkSub">Pipeline Status</label>
@@ -788,16 +789,41 @@ function openDashboard() {
       closeAssetModal.addEventListener("click", () => { assetModal.classList.add("hidden"); assetModal.classList.remove("flex"); });
       assetModal.addEventListener("click", (e) => { if (e.target === assetModal) { assetModal.classList.add("hidden"); assetModal.classList.remove("flex"); } });
 
+// Generate System Serial Number: CR-[BRAND]-[YYMMDD]-[SEQUENCE]
+      function generateSerial(modelText) {
+        // [BRAND]: first 4 letters of brand/model in uppercase, default GENR
+        const clean = (modelText || "").replace(/[^a-zA-Z]/g, "").toUpperCase();
+        const brand = clean.length >= 4 ? clean.slice(0, 4) : (clean || "GENR");
+        // [YYMMDD]: 2-digit year, month, day
+        const d = new Date();
+        const ymd = String(d.getFullYear()).slice(-2)
+          + String(d.getMonth() + 1).padStart(2, "0")
+          + String(d.getDate()).padStart(2, "0");
+        // [SEQUENCE]: inventory length + 1, zero-padded 3 digits
+        const seq = String(inventory.length + 1).padStart(3, "0");
+        return `CR-${brand}-${ymd}-${seq}`;
+      }
+
       function openAssetModal(item) {
         document.getElementById("assetEditId").value = item ? item._idx : "";
         document.getElementById("aModel").value = item ? item.model : "";
         document.getElementById("aDonor").value = item ? item.donor : "";
-        document.getElementById("aSerial").value = item ? item.serial : "";
+        // For a new asset, auto-generate the serial from the model; for editing, keep existing serial
+        document.getElementById("aSerial").value = item ? item.serial : generateSerial("");
         document.getElementById("aStatus").value = item ? item.status : "Intake Received";
         document.getElementById("aRecipient").value = item ? item.recipient : "";
         assetModal.classList.remove("hidden");
         assetModal.classList.add("flex");
       }
+
+      // Regenerate the serial number live as the user types the model/brand
+      const aModelInput = document.getElementById("aModel");
+      aModelInput.addEventListener("input", () => {
+        const isNew = document.getElementById("assetEditId").value === "";
+        if (isNew) {
+          document.getElementById("aSerial").value = generateSerial(aModelInput.value);
+        }
+      });
 
       assetForm.addEventListener("submit", (e) => {
         e.preventDefault();
